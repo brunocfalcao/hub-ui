@@ -13,14 +13,14 @@
             </a>
         </x-slot:logo>
 
-        {{-- Navigation goes in default slot --}}
+        <!-- Navigation goes in default slot -->
         <x-ui::sidebar.section name="servers" label="Servers">
             <x-slot:icon>...</x-slot:icon>
             <x-ui::sidebar.link href="/servers" :active="true" child>All Servers</x-ui::sidebar.link>
         </x-ui::sidebar.section>
 
         <x-slot:footer>
-            {{-- User avatar, logout, etc. --}}
+            <!-- User avatar, logout, etc. -->
         </x-slot:footer>
     </x-ui::sidebar>
 --}}

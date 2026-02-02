@@ -8,12 +8,12 @@
             </x-ui::sidebar>
         </x-slot:sidebar>
 
-        {{-- Main content --}}
+        <!-- Main content -->
         <x-ui::page-header title="Servers" />
         ...
 
         <x-slot:scripts>
-            {{-- Page-specific scripts --}}
+            <!-- Page-specific scripts -->
         </x-slot:scripts>
     </x-ui::layouts.dashboard>
 --}}
