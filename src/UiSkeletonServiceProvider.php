@@ -28,10 +28,9 @@ class UiSkeletonServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'ui');
 
-        // Register Blade components with the configured prefix
-        $prefix = config('ui-skeleton.prefix', 'ui');
-
-        Blade::componentNamespace('Brunocfalcao\\UiSkeleton\\Views\\Components', $prefix);
+        // Register anonymous Blade components
+        // Components at resources/views/components/* are available as <x-ui::*>
+        Blade::anonymousComponentPath(__DIR__.'/../resources/views/components', 'ui');
     }
 
     protected function registerBladeDirectives(): void
