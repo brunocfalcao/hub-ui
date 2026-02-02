@@ -1,0 +1,84 @@
+/**
+ * UI Skeleton - CSS Custom Properties
+ *
+ * These CSS variables can be overridden in your application's CSS
+ * to customize the theme colors.
+ *
+ * Usage in your app.css:
+ *   @import './vendor/ui-skeleton/ui-skeleton.css';
+ *
+ *   :root {
+ *       --ui-color-primary: 59 130 246;  // Change to blue
+ *   }
+ */
+
+:root {
+    /* Primary accent color (RGB values for Tailwind opacity modifiers) */
+    --ui-color-primary: 16 185 129;           /* emerald-500 */
+    --ui-color-primary-hover: 5 150 105;      /* emerald-600 */
+    --ui-color-primary-light: 110 231 183;    /* emerald-300 */
+
+    /* Background colors */
+    --ui-bg-body: 26 30 46;                   /* #1a1e2e */
+    --ui-bg-sidebar: 21 24 32;               /* #151820 */
+    --ui-bg-card: 26 35 50;                  /* #1a2332 */
+    --ui-bg-input: 38 38 38;                 /* neutral-800 */
+
+    /* Border colors */
+    --ui-border: 64 64 64;                   /* neutral-700 */
+    --ui-border-light: 255 255 255 / 0.1;    /* white/10 */
+
+    /* Text colors */
+    --ui-text: 245 245 245;                  /* neutral-100 */
+    --ui-text-muted: 163 163 163;            /* neutral-400 */
+    --ui-text-subtle: 115 115 115;           /* neutral-500 */
+
+    /* Status colors */
+    --ui-success: 34 197 94;                 /* green-500 */
+    --ui-warning: 245 158 11;                /* amber-500 */
+    --ui-danger: 239 68 68;                  /* red-500 */
+    --ui-info: 59 130 246;                   /* blue-500 */
+}
+
+/* Dark mode is the default, but you can add light mode support */
+@media (prefers-color-scheme: light) {
+    :root {
+        /* Optionally override for light mode */
+        /* Currently UI Skeleton is dark-only */
+    }
+}
+
+/* Alpine.js cloak directive support */
+[x-cloak] {
+    display: none !important;
+}
+
+/* Smooth scrolling for the main content area */
+.overflow-y-auto {
+    scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgb(var(--ui-bg-body));
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(var(--ui-border));
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--ui-text-subtle));
+}
+
+/* Firefox scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--ui-border)) rgb(var(--ui-bg-body));
+}

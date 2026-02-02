@@ -1,0 +1,41 @@
+{
+    "name": "brunocfalcao/ui-skeleton",
+    "description": "Reusable Laravel admin panel UI components with dark theme, Alpine.js, and Tailwind CSS",
+    "keywords": [
+        "laravel",
+        "ui",
+        "components",
+        "blade",
+        "admin",
+        "dashboard",
+        "dark-theme",
+        "tailwindcss",
+        "alpinejs"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bruno Falcao",
+            "email": "bruno.falcao@laraning.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "illuminate/support": "^11.0|^12.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Brunocfalcao\\UiSkeleton\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Brunocfalcao\\UiSkeleton\\UiSkeletonServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
