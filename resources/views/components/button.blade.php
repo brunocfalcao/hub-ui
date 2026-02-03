@@ -9,7 +9,7 @@
 
 @php
     $variants = [
-        'primary' => 'bg-emerald-600 text-white hover:bg-emerald-500 focus:bg-emerald-500 active:bg-emerald-700 focus:ring-emerald-500',
+        'primary' => 'bg-indigo-600 text-white hover:bg-indigo-500 disabled:bg-indigo-600/50 disabled:cursor-not-allowed focus:ring-indigo-500',
         'secondary' => 'bg-white/5 text-white/70 border border-white/10 hover:bg-white/10 hover:text-white focus:ring-emerald-500',
         'danger' => 'bg-red-700 text-white hover:bg-red-600 active:bg-red-800 focus:ring-red-500',
         'ghost' => 'text-white/70 hover:bg-white/5 hover:text-white focus:ring-emerald-500',
@@ -25,7 +25,7 @@
     $variantClass = $variants[$variant] ?? $variants['primary'];
     $sizeClass = $sizes[$size] ?? $sizes['md'];
 
-    $baseClasses = "inline-flex items-center justify-center font-semibold uppercase tracking-widest rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#151b23] transition ease-in-out duration-150";
+    $baseClasses = "inline-flex items-center justify-center font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#151b23] transition-colors";
 
     if ($disabled || $loading) {
         $baseClasses .= " opacity-50 cursor-not-allowed";
