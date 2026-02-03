@@ -1,5 +1,5 @@
-{{-- Default UI Skeleton Logo --}}
-{{-- Override by setting 'app.logo' in config/ui-skeleton.php --}}
+{{-- Default Hub UI Logo --}}
+{{-- Override by setting 'app.logo' in config/hub-ui.php --}}
 <svg viewBox="0 0 40 40" {{ $attributes->merge(['class' => 'w-14 h-14 text-white']) }}>
     {{-- Center hub --}}
     <circle cx="20" cy="20" r="6" fill="#10b981"/>

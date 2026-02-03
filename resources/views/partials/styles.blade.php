@@ -1,5 +1,5 @@
-{{-- UI Skeleton Styles --}}
-{{-- This partial is rendered by the @uiSkeletonStyles directive --}}
+{{-- Hub UI Styles --}}
+{{-- This partial is rendered by the @hubUiStyles directive --}}
 <style>
     :root {
         --ui-color-primary: 16 185 129;

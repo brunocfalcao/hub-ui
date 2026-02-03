@@ -5,14 +5,14 @@
 A flexible modal component with Alpine.js.
 
 ```blade
-<x-ui::modal name="edit-user" maxWidth="lg">
+<x-hub-ui::modal name="edit-user" maxWidth="lg">
     <div class="p-6">
         <h2 class="text-lg font-medium text-white">Edit User</h2>
         <form>
             {{-- Form content --}}
         </form>
     </div>
-</x-ui::modal>
+</x-hub-ui::modal>
 ```
 
 ### Props
@@ -50,9 +50,9 @@ Use Alpine.js events:
 Add the `focusable` attribute to auto-focus the first element:
 
 ```blade
-<x-ui::modal name="confirm" focusable>
+<x-hub-ui::modal name="confirm" focusable>
     {{-- First focusable element will be focused --}}
-</x-ui::modal>
+</x-hub-ui::modal>
 ```
 
 ## Confirmation Modal
@@ -104,7 +104,7 @@ window.showConfirmation({
     @method('DELETE')
 </form>
 
-<x-ui::button
+<x-hub-ui::button
     variant="danger"
     onclick="window.showConfirmation({
         title: 'Delete Server',
@@ -115,7 +115,7 @@ window.showConfirmation({
     })"
 >
     Delete
-</x-ui::button>
+</x-hub-ui::button>
 ```
 
 ### Example: Warning Confirmation
@@ -137,20 +137,20 @@ window.showConfirmation({
 
 ### Include in Layout
 
-The confirmation modal is automatically included in the dashboard layout when `config('ui-skeleton.features.confirmation')` is `true`.
+The confirmation modal is automatically included in the dashboard layout when `config('hub-ui.features.confirmation')` is `true`.
 
 For custom layouts:
 
 ```blade
 {{-- At the end of your body --}}
-<x-ui::modal-confirmation />
+<x-hub-ui::modal-confirmation />
 ```
 
 ### Initialize JavaScript
 
 ```javascript
 // resources/js/app.js
-import { initConfirmation } from './vendor/ui-skeleton/ui-skeleton.js';
+import { initConfirmation } from './vendor/hub-ui/hub-ui.js';
 
 document.addEventListener('DOMContentLoaded', function() {
     initConfirmation();
@@ -165,7 +165,7 @@ document.addEventListener('turbo:load', function() {
 ## Disable Confirmation Modal
 
 ```php
-// config/ui-skeleton.php
+// config/hub-ui.php
 'features' => [
     'confirmation' => false,
 ],

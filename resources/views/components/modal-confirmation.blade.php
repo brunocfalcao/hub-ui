@@ -2,7 +2,7 @@
 {{-- Usage: window.showConfirmation({ title, message, confirmText, cancelText, type, onConfirm }) --}}
 
 @php
-    $bgColor = config('ui-skeleton.layout.colors.body', '#1a1e2e');
+    $bgColor = config('hub-ui.layout.colors.body', '#1a1e2e');
 @endphp
 
 <div id="confirmation-modal" class="fixed inset-0 z-[9999] hidden">

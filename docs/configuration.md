@@ -1,6 +1,6 @@
 # Configuration
 
-After publishing the configuration file, you can customize UI Skeleton in `config/ui-skeleton.php`.
+After publishing the configuration file, you can customize Hub UI in `config/hub-ui.php`.
 
 ## Component Prefix
 
@@ -8,7 +8,7 @@ After publishing the configuration file, you can customize UI Skeleton in `confi
 'prefix' => 'ui',
 ```
 
-The prefix used for all components. Default is `ui`, so components are accessed as `<x-ui::button>`.
+The prefix used for all components. Default is `hub-ui`, so components are accessed as `<x-hub-ui::button>`.
 
 ## Application Settings
 
@@ -21,13 +21,13 @@ The prefix used for all components. Default is `ui`, so components are accessed 
 ```
 
 - **name**: Application name used in layouts
-- **logo**: Custom logo component path (e.g., `'components.my-logo'`). If null, uses the default UI Skeleton logo.
+- **logo**: Custom logo component path (e.g., `'components.my-logo'`). If null, uses the default Hub UI logo.
 - **dashboard_route**: Route name for the logo link in the sidebar
 
 ### Custom Logo Example
 
 ```php
-// config/ui-skeleton.php
+// config/hub-ui.php
 'app' => [
     'logo' => 'components.my-app-logo',
 ],
@@ -100,7 +100,7 @@ Enable or disable features in the dashboard layout:
 You can use environment variables in your configuration:
 
 ```php
-// config/ui-skeleton.php
+// config/hub-ui.php
 'app' => [
     'name' => env('UI_APP_NAME', env('APP_NAME', 'Laravel')),
 ],

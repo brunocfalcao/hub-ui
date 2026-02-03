@@ -1,11 +1,11 @@
 /**
- * UI Skeleton - CSS Custom Properties
+ * Hub UI - CSS Custom Properties
  *
  * These CSS variables can be overridden in your application's CSS
  * to customize the theme colors.
  *
  * Usage in your app.css:
- *   @import './vendor/ui-skeleton/ui-skeleton.css';
+ *   @import './vendor/hub-ui/hub-ui.css';
  *
  *   :root {
  *       --ui-color-primary: 59 130 246;  // Change to blue
@@ -44,7 +44,7 @@
 @media (prefers-color-scheme: light) {
     :root {
         /* Optionally override for light mode */
-        /* Currently UI Skeleton is dark-only */
+        /* Currently Hub UI is dark-only */
     }
 }
 

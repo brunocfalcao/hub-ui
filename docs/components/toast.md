@@ -62,20 +62,20 @@ window.hideAllToasts();
 
 ### Include in Layout
 
-The toast container is automatically included in the dashboard layout when `config('ui-skeleton.features.toast')` is `true`.
+The toast container is automatically included in the dashboard layout when `config('hub-ui.features.toast')` is `true`.
 
 For custom layouts:
 
 ```blade
 {{-- Near the end of your body --}}
-<x-ui::toast />
+<x-hub-ui::toast />
 ```
 
 ### Initialize JavaScript
 
 ```javascript
 // resources/js/app.js
-import { initToast } from './vendor/ui-skeleton/ui-skeleton.js';
+import { initToast } from './vendor/hub-ui/hub-ui.js';
 
 document.addEventListener('DOMContentLoaded', function() {
     initToast();
@@ -149,7 +149,7 @@ public function save()
 ## Disable Toasts
 
 ```php
-// config/ui-skeleton.php
+// config/hub-ui.php
 'features' => [
     'toast' => false,
 ],
@@ -157,4 +157,4 @@ public function save()
 
 ## Styling
 
-Toast colors are defined in the JavaScript module. To customize, publish the assets and modify `resources/js/vendor/ui-skeleton/modules/toast.js`.
+Toast colors are defined in the JavaScript module. To customize, publish the assets and modify `resources/js/vendor/hub-ui/modules/toast.js`.

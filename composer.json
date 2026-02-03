@@ -1,5 +1,5 @@
 {
-    "name": "brunocfalcao/ui-skeleton",
+    "name": "brunocfalcao/hub-ui",
     "description": "Reusable Laravel admin panel UI components with dark theme, Alpine.js, and Tailwind CSS",
     "keywords": [
         "laravel",
@@ -26,13 +26,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Brunocfalcao\\UiSkeleton\\": "src/"
+            "HubUI\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Brunocfalcao\\UiSkeleton\\UiSkeletonServiceProvider"
+                "HubUI\\HubUIServiceProvider"
             ]
         }
     },

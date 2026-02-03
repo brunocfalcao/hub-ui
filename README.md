@@ -1,4 +1,4 @@
-# UI Skeleton
+# Hub UI
 
 A reusable Laravel admin panel UI components package with dark theme, Alpine.js, and Tailwind CSS.
 
@@ -22,13 +22,13 @@ A reusable Laravel admin panel UI components package with dark theme, Alpine.js,
 ## Installation
 
 ```bash
-composer require brunocfalcao/ui-skeleton
+composer require brunocfalcao/hub-ui
 ```
 
 Publish the configuration file:
 
 ```bash
-php artisan vendor:publish --tag=ui-skeleton-config
+php artisan vendor:publish --tag=hub-ui-config
 ```
 
 ## Quick Start
@@ -37,22 +37,22 @@ php artisan vendor:publish --tag=ui-skeleton-config
 
 ```blade
 {{-- resources/views/layouts/app.blade.php --}}
-<x-ui::layouts.dashboard title="My App">
+<x-hub-ui::layouts.dashboard title="My App">
     <x-slot:sidebar>
-        <x-ui::sidebar :activeSection="'dashboard'">
+        <x-hub-ui::sidebar :activeSection="'dashboard'">
             {{-- Your navigation here --}}
-        </x-ui::sidebar>
+        </x-hub-ui::sidebar>
     </x-slot:sidebar>
 
     {{ $slot }}
-</x-ui::layouts.dashboard>
+</x-hub-ui::layouts.dashboard>
 ```
 
 ### 2. Initialize JavaScript modules
 
 ```javascript
 // resources/js/app.js
-import { initToast, initConfirmation } from './vendor/ui-skeleton/ui-skeleton.js';
+import { initToast, initConfirmation } from './vendor/hub-ui/hub-ui.js';
 
 document.addEventListener('DOMContentLoaded', function() {
     initToast();
@@ -63,11 +63,11 @@ document.addEventListener('DOMContentLoaded', function() {
 ### 3. Use components
 
 ```blade
-<x-ui::card title="Server Details">
-    <x-ui::input name="hostname" label="Hostname" required />
-    <x-ui::select name="region" label="Region" :options="$regions" />
-    <x-ui::button type="submit">Save</x-ui::button>
-</x-ui::card>
+<x-hub-ui::card title="Server Details">
+    <x-hub-ui::input name="hostname" label="Hostname" required />
+    <x-hub-ui::select name="region" label="Region" :options="$regions" />
+    <x-hub-ui::button type="submit">Save</x-hub-ui::button>
+</x-hub-ui::card>
 ```
 
 ## Documentation

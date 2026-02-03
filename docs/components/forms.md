@@ -5,7 +5,7 @@
 Text input with label, validation, and hints.
 
 ```blade
-<x-ui::input
+<x-hub-ui::input
     name="hostname"
     label="Hostname"
     placeholder="Enter hostname"
@@ -38,7 +38,7 @@ The component automatically shows errors from Laravel's `$errors` bag:
 
 ```blade
 {{-- If validation fails for 'email', error shows automatically --}}
-<x-ui::input name="email" label="Email" type="email" />
+<x-hub-ui::input name="email" label="Email" type="email" />
 ```
 
 ## Select
@@ -46,7 +46,7 @@ The component automatically shows errors from Laravel's `$errors` bag:
 Dropdown select with options.
 
 ```blade
-<x-ui::select
+<x-hub-ui::select
     name="region"
     label="Region"
     :options="['us-east' => 'US East', 'eu-west' => 'EU West']"
@@ -77,7 +77,7 @@ Dropdown select with options.
 $serverTypes = App\Models\ServerType::pluck('name', 'id')->toArray();
 @endphp
 
-<x-ui::select
+<x-hub-ui::select
     name="server_type_id"
     label="Server Type"
     :options="$serverTypes"
@@ -89,7 +89,7 @@ $serverTypes = App\Models\ServerType::pluck('name', 'id')->toArray();
 Multi-line text input.
 
 ```blade
-<x-ui::textarea
+<x-hub-ui::textarea
     name="notes"
     label="Notes"
     rows="5"
@@ -118,7 +118,7 @@ Multi-line text input.
 Single checkbox with label.
 
 ```blade
-<x-ui::checkbox
+<x-hub-ui::checkbox
     name="agree_terms"
     label="I agree to the terms and conditions"
     required
@@ -142,17 +142,17 @@ Single checkbox with label.
 Styled button with variants and sizes.
 
 ```blade
-<x-ui::button type="submit" variant="primary">
+<x-hub-ui::button type="submit" variant="primary">
     Save Changes
-</x-ui::button>
+</x-hub-ui::button>
 
-<x-ui::button variant="danger" onclick="confirmDelete()">
+<x-hub-ui::button variant="danger" onclick="confirmDelete()">
     Delete
-</x-ui::button>
+</x-hub-ui::button>
 
-<x-ui::button href="/servers" variant="secondary">
+<x-hub-ui::button href="/servers" variant="secondary">
     Cancel
-</x-ui::button>
+</x-hub-ui::button>
 ```
 
 ### Props
@@ -177,45 +177,45 @@ Styled button with variants and sizes.
 ### Loading State
 
 ```blade
-<x-ui::button
+<x-hub-ui::button
     type="submit"
     :loading="$isSubmitting"
     x-bind:disabled="isSubmitting"
 >
     <span x-show="!isSubmitting">Save</span>
     <span x-show="isSubmitting">Saving...</span>
-</x-ui::button>
+</x-hub-ui::button>
 ```
 
 ## Complete Form Example
 
 ```blade
-<x-ui::card title="Create Server">
+<x-hub-ui::card title="Create Server">
     <form action="{{ route('servers.store') }}" method="POST">
         @csrf
 
         <div class="space-y-4">
-            <x-ui::input
+            <x-hub-ui::input
                 name="name"
                 label="Server Name"
                 placeholder="my-server"
                 required
             />
 
-            <x-ui::select
+            <x-hub-ui::select
                 name="region"
                 label="Region"
                 :options="$regions"
                 required
             />
 
-            <x-ui::textarea
+            <x-hub-ui::textarea
                 name="notes"
                 label="Notes"
                 rows="3"
             />
 
-            <x-ui::checkbox
+            <x-hub-ui::checkbox
                 name="auto_backup"
                 label="Enable automatic backups"
                 :checked="true"
@@ -224,14 +224,14 @@ Styled button with variants and sizes.
 
         <x-slot:footer>
             <div class="flex justify-end gap-3">
-                <x-ui::button href="{{ route('servers.index') }}" variant="secondary">
+                <x-hub-ui::button href="{{ route('servers.index') }}" variant="secondary">
                     Cancel
-                </x-ui::button>
-                <x-ui::button type="submit">
+                </x-hub-ui::button>
+                <x-hub-ui::button type="submit">
                     Create Server
-                </x-ui::button>
+                </x-hub-ui::button>
             </div>
         </x-slot:footer>
     </form>
-</x-ui::card>
+</x-hub-ui::card>
 ```

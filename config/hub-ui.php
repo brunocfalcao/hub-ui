@@ -6,12 +6,12 @@ return [
     | Component Prefix
     |--------------------------------------------------------------------------
     |
-    | The prefix used for all UI Skeleton components.
+    | The prefix used for all Hub UI components.
     | Components are accessed as <x-{prefix}::component-name>
-    | Default: 'ui' -> <x-ui::button>, <x-ui::card>, etc.
+    | Default: 'hub-ui' -> <x-hub-ui::button>, <x-hub-ui::card>, etc.
     |
     */
-    'prefix' => 'ui',
+    'prefix' => 'hub-ui',
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return [
         'name' => env('APP_NAME', 'Laravel'),
 
         // Custom logo component path (e.g., 'components.my-logo')
-        // If null, uses the default UI Skeleton logo
+        // If null, uses the default Hub UI logo
         'logo' => null,
 
         // Dashboard route name for logo link

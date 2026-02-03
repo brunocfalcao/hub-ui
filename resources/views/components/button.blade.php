@@ -37,7 +37,7 @@
 @if($href && !$disabled)
     <a href="{{ $href }}" {{ $attributes->merge(['class' => $classes]) }}>
         @if($loading)
-            <x-ui::spinner size="sm" />
+            <x-hub-ui::spinner size="sm" />
         @elseif(isset($icon))
             {{ $icon }}
         @endif
@@ -50,7 +50,7 @@
         {{ $attributes->merge(['class' => $classes]) }}
     >
         @if($loading)
-            <x-ui::spinner size="sm" />
+            <x-hub-ui::spinner size="sm" />
         @elseif(isset($icon))
             {{ $icon }}
         @endif

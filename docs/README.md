@@ -1,6 +1,6 @@
-# UI Skeleton Documentation
+# Hub UI Documentation
 
-Welcome to the UI Skeleton documentation. This package provides reusable Laravel admin panel UI components with a dark theme, Alpine.js, and Tailwind CSS.
+Welcome to the Hub UI documentation. This package provides reusable Laravel admin panel UI components with a dark theme, Alpine.js, and Tailwind CSS.
 
 ## Table of Contents
 
@@ -17,5 +17,5 @@ Welcome to the UI Skeleton documentation. This package provides reusable Laravel
 
 ## Quick Links
 
-- [GitHub Repository](https://github.com/brunocfalcao/ui-skeleton)
+- [GitHub Repository](https://github.com/brunocfalcao/hub-ui)
 - [Changelog](../CHANGELOG.md)

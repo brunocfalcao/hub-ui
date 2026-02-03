@@ -1,6 +1,6 @@
 {{-- Empty State Component --}}
 {{-- Usage:
-    <x-ui::empty-state
+    <x-hub-ui::empty-state
         title="No servers yet"
         description="Get started by creating your first server."
         :action="['href' => route('servers.create'), 'label' => 'Create your first server']"
@@ -8,7 +8,7 @@
         <x-slot:icon>
             <svg>...</svg>
         </x-slot:icon>
-    </x-ui::empty-state>
+    </x-hub-ui::empty-state>
 --}}
 @props([
     'title',

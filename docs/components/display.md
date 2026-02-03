@@ -5,13 +5,13 @@
 Container with optional title, subtitle, and footer.
 
 ```blade
-<x-ui::card title="Server Details" subtitle="Configuration and status">
+<x-hub-ui::card title="Server Details" subtitle="Configuration and status">
     <p>Card content goes here.</p>
 
     <x-slot:footer>
-        <x-ui::button>Save Changes</x-ui::button>
+        <x-hub-ui::button>Save Changes</x-hub-ui::button>
     </x-slot:footer>
-</x-ui::card>
+</x-hub-ui::card>
 ```
 
 ### Props
@@ -26,11 +26,11 @@ Container with optional title, subtitle, and footer.
 ### Without Padding
 
 ```blade
-<x-ui::card :padding="false">
+<x-hub-ui::card :padding="false">
     <table class="w-full">
         {{-- Table without extra padding --}}
     </table>
-</x-ui::card>
+</x-hub-ui::card>
 ```
 
 ## Badge
@@ -38,9 +38,9 @@ Container with optional title, subtitle, and footer.
 Small label/tag for status or categories.
 
 ```blade
-<x-ui::badge type="success">Active</x-ui::badge>
-<x-ui::badge type="danger" dot>Error</x-ui::badge>
-<x-ui::badge type="warning" size="sm">Warning</x-ui::badge>
+<x-hub-ui::badge type="success">Active</x-hub-ui::badge>
+<x-hub-ui::badge type="danger" dot>Error</x-hub-ui::badge>
+<x-hub-ui::badge type="warning" size="sm">Warning</x-hub-ui::badge>
 ```
 
 ### Props
@@ -68,13 +68,13 @@ Small label/tag for status or categories.
 Notification banner with icon.
 
 ```blade
-<x-ui::alert type="success" title="Success!">
+<x-hub-ui::alert type="success" title="Success!">
     Your changes have been saved.
-</x-ui::alert>
+</x-hub-ui::alert>
 
-<x-ui::alert type="warning" dismissible>
+<x-hub-ui::alert type="warning" dismissible>
     Please review your settings.
-</x-ui::alert>
+</x-hub-ui::alert>
 ```
 
 ### Props
@@ -97,9 +97,9 @@ Notification banner with icon.
 Inline status indicator with optional animation.
 
 ```blade
-<x-ui::status color="emerald" label="Connected" />
-<x-ui::status color="red" label="Error" title="Connection failed" />
-<x-ui::status color="blue" label="Processing" :animated="true" />
+<x-hub-ui::status color="emerald" label="Connected" />
+<x-hub-ui::status color="red" label="Error" title="Connection failed" />
+<x-hub-ui::status color="blue" label="Processing" :animated="true" />
 ```
 
 ### Props
@@ -125,7 +125,7 @@ safelist: [
 Page title with optional description.
 
 ```blade
-<x-ui::page-header
+<x-hub-ui::page-header
     title="Servers"
     description="Manage your server infrastructure"
 />
@@ -143,7 +143,7 @@ Page title with optional description.
 Placeholder for empty lists/tables.
 
 ```blade
-<x-ui::empty-state
+<x-hub-ui::empty-state
     title="No servers yet"
     description="Get started by creating your first server."
     :action="['href' => route('servers.create'), 'label' => 'Create your first server']"
@@ -153,7 +153,7 @@ Placeholder for empty lists/tables.
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.25 14.25h13.5..." />
         </svg>
     </x-slot:icon>
-</x-ui::empty-state>
+</x-hub-ui::empty-state>
 ```
 
 ### Props
@@ -175,18 +175,18 @@ Placeholder for empty lists/tables.
 Click-triggered dropdown menu.
 
 ```blade
-<x-ui::dropdown align="right">
+<x-hub-ui::dropdown align="right">
     <x-slot:trigger>
-        <x-ui::button variant="secondary">
+        <x-hub-ui::button variant="secondary">
             Actions
-        </x-ui::button>
+        </x-hub-ui::button>
     </x-slot:trigger>
 
     <x-slot:content>
-        <x-ui::dropdown-link href="/edit">Edit</x-ui::dropdown-link>
-        <x-ui::dropdown-link href="/delete">Delete</x-ui::dropdown-link>
+        <x-hub-ui::dropdown-link href="/edit">Edit</x-hub-ui::dropdown-link>
+        <x-hub-ui::dropdown-link href="/delete">Delete</x-hub-ui::dropdown-link>
     </x-slot:content>
-</x-ui::dropdown>
+</x-hub-ui::dropdown>
 ```
 
 ### Props
@@ -209,8 +209,8 @@ Click-triggered dropdown menu.
 Link item for dropdown content.
 
 ```blade
-<x-ui::dropdown-link href="/profile">Profile</x-ui::dropdown-link>
-<x-ui::dropdown-link href="/settings">Settings</x-ui::dropdown-link>
+<x-hub-ui::dropdown-link href="/profile">Profile</x-hub-ui::dropdown-link>
+<x-hub-ui::dropdown-link href="/settings">Settings</x-hub-ui::dropdown-link>
 ```
 
 All attributes are passed through to the `<a>` element.

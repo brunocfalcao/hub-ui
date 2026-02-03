@@ -1,7 +1,7 @@
 {{-- Status Indicator Component --}}
-{{-- Usage: <x-ui::status color="emerald" label="Connected" /> --}}
-{{-- With tooltip: <x-ui::status color="red" label="Error" title="Connection failed" /> --}}
-{{-- Animated: <x-ui::status color="blue" label="Processing" :animated="true" /> --}}
+{{-- Usage: <x-hub-ui::status color="emerald" label="Connected" /> --}}
+{{-- With tooltip: <x-hub-ui::status color="red" label="Error" title="Connection failed" /> --}}
+{{-- Animated: <x-hub-ui::status color="blue" label="Processing" :animated="true" /> --}}
 {{--
     NOTE: This component uses dynamic Tailwind classes (bg-{color}-500, text-{color}-400).
     You must safelist these colors in your tailwind.config.js:

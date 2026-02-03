@@ -4,21 +4,21 @@ The sidebar component provides an accordion-style navigation with localStorage p
 
 ## Components
 
-- `<x-ui::sidebar>` - Main sidebar wrapper
-- `<x-ui::sidebar.section>` - Accordion section with collapsible children
-- `<x-ui::sidebar.link>` - Navigation link
-- `<x-ui::sidebar.logo>` - Default logo (can be replaced)
+- `<x-hub-ui::sidebar>` - Main sidebar wrapper
+- `<x-hub-ui::sidebar.section>` - Accordion section with collapsible children
+- `<x-hub-ui::sidebar.link>` - Navigation link
+- `<x-hub-ui::sidebar.logo>` - Default logo (can be replaced)
 
 ## Sidebar Wrapper
 
 ```blade
-<x-ui::sidebar :activeSection="'servers'">
+<x-hub-ui::sidebar :activeSection="'servers'">
     {{-- Navigation content --}}
 
     <x-slot:footer>
         {{-- User avatar, logout button, etc. --}}
     </x-slot:footer>
-</x-ui::sidebar>
+</x-hub-ui::sidebar>
 ```
 
 ### Props
@@ -40,7 +40,7 @@ The sidebar component provides an accordion-style navigation with localStorage p
 Accordion-style parent with collapsible children.
 
 ```blade
-<x-ui::sidebar.section name="servers" label="Servers">
+<x-hub-ui::sidebar.section name="servers" label="Servers">
     <x-slot:icon>
         <svg class="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.25 14.25h13.5..." />
@@ -48,10 +48,10 @@ Accordion-style parent with collapsible children.
     </x-slot:icon>
 
     {{-- Child links --}}
-    <x-ui::sidebar.link href="/servers" :active="true" child>
+    <x-hub-ui::sidebar.link href="/servers" :active="true" child>
         All Servers
-    </x-ui::sidebar.link>
-</x-ui::sidebar.section>
+    </x-hub-ui::sidebar.link>
+</x-hub-ui::sidebar.section>
 ```
 
 ### Props
@@ -73,7 +73,7 @@ Accordion-style parent with collapsible children.
 Navigation link with icon and label.
 
 ```blade
-<x-ui::sidebar.link
+<x-hub-ui::sidebar.link
     href="/servers"
     :active="request()->routeIs('servers.*')"
     child
@@ -82,7 +82,7 @@ Navigation link with icon and label.
         <svg>...</svg>
     </x-slot:icon>
     All Servers
-</x-ui::sidebar.link>
+</x-hub-ui::sidebar.link>
 ```
 
 ### Props
@@ -98,7 +98,7 @@ Navigation link with icon and label.
 ### Option 1: Config
 
 ```php
-// config/ui-skeleton.php
+// config/hub-ui.php
 'app' => [
     'logo' => 'components.my-logo',
 ],
@@ -107,7 +107,7 @@ Navigation link with icon and label.
 ### Option 2: Slot
 
 ```blade
-<x-ui::sidebar>
+<x-hub-ui::sidebar>
     <x-slot:logo>
         <a href="{{ route('dashboard') }}">
             <x-my-app-logo />
@@ -115,13 +115,13 @@ Navigation link with icon and label.
     </x-slot:logo>
 
     {{-- Navigation --}}
-</x-ui::sidebar>
+</x-hub-ui::sidebar>
 ```
 
 ## Complete Example
 
 ```blade
-<x-ui::sidebar :activeSection="request()->routeIs('servers.*') ? 'servers' : ''">
+<x-hub-ui::sidebar :activeSection="request()->routeIs('servers.*') ? 'servers' : ''">
     <x-slot:logo>
         <a href="{{ route('dashboard') }}">
             <x-application-logo class="w-14 h-14" />
@@ -129,7 +129,7 @@ Navigation link with icon and label.
     </x-slot:logo>
 
     {{-- Home (standalone link) --}}
-    <x-ui::sidebar.link
+    <x-hub-ui::sidebar.link
         href="{{ route('dashboard') }}"
         :active="request()->routeIs('dashboard')"
     >
@@ -139,34 +139,34 @@ Navigation link with icon and label.
             </svg>
         </x-slot:icon>
         Home
-    </x-ui::sidebar.link>
+    </x-hub-ui::sidebar.link>
 
     {{-- Servers Section --}}
-    <x-ui::sidebar.section name="servers" label="Servers">
+    <x-hub-ui::sidebar.section name="servers" label="Servers">
         <x-slot:icon>
             <svg class="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path d="M5.25 14.25h13.5..." />
             </svg>
         </x-slot:icon>
 
-        <x-ui::sidebar.link href="{{ route('servers.index') }}" :active="request()->routeIs('servers.index')" child>
+        <x-hub-ui::sidebar.link href="{{ route('servers.index') }}" :active="request()->routeIs('servers.index')" child>
             <x-slot:icon>
                 <svg class="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path d="M8.25 6.75h12..." />
                 </svg>
             </x-slot:icon>
             All Servers
-        </x-ui::sidebar.link>
+        </x-hub-ui::sidebar.link>
 
-        <x-ui::sidebar.link href="{{ route('servers.create') }}" :active="request()->routeIs('servers.create')" child>
+        <x-hub-ui::sidebar.link href="{{ route('servers.create') }}" :active="request()->routeIs('servers.create')" child>
             <x-slot:icon>
                 <svg class="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
             </x-slot:icon>
             Create Server
-        </x-ui::sidebar.link>
-    </x-ui::sidebar.section>
+        </x-hub-ui::sidebar.link>
+    </x-hub-ui::sidebar.section>
 
     <x-slot:footer>
         @auth
@@ -180,7 +180,7 @@ Navigation link with icon and label.
             </form>
         @endauth
     </x-slot:footer>
-</x-ui::sidebar>
+</x-hub-ui::sidebar>
 ```
 
 ## LocalStorage Persistence
@@ -188,7 +188,7 @@ Navigation link with icon and label.
 The accordion state is automatically saved to localStorage. Disable with:
 
 ```php
-// config/ui-skeleton.php
+// config/hub-ui.php
 'sidebar' => [
     'persistence' => false,
 ],

@@ -1,32 +1,32 @@
 {{-- Dashboard Layout with Sidebar --}}
 {{--
     Usage:
-    <x-ui::layouts.dashboard title="Page Title">
+    <x-hub-ui::layouts.dashboard title="Page Title">
         <x-slot:sidebar>
-            <x-ui::sidebar :activeSection="'servers'">
+            <x-hub-ui::sidebar :activeSection="'servers'">
                 ...navigation...
-            </x-ui::sidebar>
+            </x-hub-ui::sidebar>
         </x-slot:sidebar>
 
         <!-- Main content -->
-        <x-ui::page-header title="Servers" />
+        <x-hub-ui::page-header title="Servers" />
         ...
 
         <x-slot:scripts>
             <!-- Page-specific scripts -->
         </x-slot:scripts>
-    </x-ui::layouts.dashboard>
+    </x-hub-ui::layouts.dashboard>
 --}}
 @props([
     'title' => config('app.name'),
 ])
 
 @php
-    $bodyBg = config('ui-skeleton.layout.colors.body', '#1a1e2e');
-    $sidebarBg = config('ui-skeleton.layout.colors.sidebar', '#151820');
-    $sidebarWidth = config('ui-skeleton.sidebar.width', 'w-28');
-    $toastEnabled = config('ui-skeleton.features.toast', true);
-    $confirmationEnabled = config('ui-skeleton.features.confirmation', true);
+    $bodyBg = config('hub-ui.layout.colors.body', '#1a1e2e');
+    $sidebarBg = config('hub-ui.layout.colors.sidebar', '#151820');
+    $sidebarWidth = config('hub-ui.sidebar.width', 'w-28');
+    $toastEnabled = config('hub-ui.features.toast', true);
+    $confirmationEnabled = config('hub-ui.features.confirmation', true);
 @endphp
 
 <!doctype html>
@@ -100,12 +100,12 @@
 
     {{-- Toast Notifications --}}
     @if($toastEnabled)
-        <x-ui::toast />
+        <x-hub-ui::toast />
     @endif
 
     {{-- Confirmation Modal --}}
     @if($confirmationEnabled)
-        <x-ui::modal-confirmation />
+        <x-hub-ui::modal-confirmation />
     @endif
 
     {{-- Scripts slot --}}

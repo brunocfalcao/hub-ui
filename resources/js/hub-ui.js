@@ -1,11 +1,11 @@
 /**
- * UI Skeleton - Main Entry Point
+ * Hub UI - Main Entry Point
  *
  * This file exports the toast and confirmation modules for use in your application.
  *
  * Usage in your app.js:
  *
- *   import { initToast, initConfirmation } from './vendor/ui-skeleton/ui-skeleton.js';
+ *   import { initToast, initConfirmation } from './vendor/hub-ui/hub-ui.js';
  *
  *   // Initialize on page load
  *   document.addEventListener('DOMContentLoaded', function() {

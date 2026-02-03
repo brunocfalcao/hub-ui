@@ -1,10 +1,10 @@
 # Theming
 
-UI Skeleton uses CSS custom properties (variables) for theming, making it easy to customize colors without modifying component files.
+Hub UI uses CSS custom properties (variables) for theming, making it easy to customize colors without modifying component files.
 
 ## CSS Custom Properties
 
-The default theme is defined in `resources/css/ui-skeleton.css`:
+The default theme is defined in `resources/css/hub-ui.css`:
 
 ```css
 :root {
@@ -34,7 +34,7 @@ Override these variables in your application's CSS:
 
 ```css
 /* resources/css/app.css */
-@import './vendor/ui-skeleton/ui-skeleton.css';
+@import './vendor/hub-ui/hub-ui.css';
 
 :root {
     /* Change primary color to blue */
@@ -119,7 +119,7 @@ Then use in your templates:
 
 ## Dynamic Tailwind Classes
 
-The `<x-ui::status>` component uses dynamic Tailwind classes. Add a safelist to your Tailwind config:
+The `<x-hub-ui::status>` component uses dynamic Tailwind classes. Add a safelist to your Tailwind config:
 
 ```javascript
 // tailwind.config.js
@@ -132,8 +132,8 @@ module.exports = {
 
 ## Dark Mode Only
 
-UI Skeleton is designed as a dark-theme-only package. If you need light mode support, you'll need to:
+Hub UI is designed as a dark-theme-only package. If you need light mode support, you'll need to:
 
-1. Publish the views: `php artisan vendor:publish --tag=ui-skeleton-views`
+1. Publish the views: `php artisan vendor:publish --tag=hub-ui-views`
 2. Modify the components to support `dark:` variants
 3. Update the CSS custom properties with `@media (prefers-color-scheme: light)` overrides

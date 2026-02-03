@@ -6,7 +6,7 @@
 ])
 
 @php
-    $bgColor = config('ui-skeleton.layout.colors.card', '#1a2332');
+    $bgColor = config('hub-ui.layout.colors.card', '#1a2332');
 @endphp
 
 <div {{ $attributes->merge(['class' => 'border border-white/10 rounded-lg shadow-lg overflow-hidden']) }} style="background-color: {{ $bgColor }}">
