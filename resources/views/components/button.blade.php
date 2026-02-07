@@ -9,7 +9,7 @@
 
 @php
     $variants = [
-        'primary' => 'bg-indigo-600 text-white hover:bg-indigo-500 disabled:bg-indigo-600/50 disabled:cursor-not-allowed focus:ring-indigo-500',
+        'primary' => 'bg-emerald-600 text-white hover:bg-emerald-500 disabled:bg-emerald-600/50 disabled:cursor-not-allowed focus:ring-emerald-500',
         'secondary' => 'bg-white/5 text-white/70 border border-white/10 hover:bg-white/10 hover:text-white focus:ring-emerald-500',
         'danger' => 'bg-red-700 text-white hover:bg-red-600 active:bg-red-800 focus:ring-red-500',
         'ghost' => 'text-white/70 hover:bg-white/5 hover:text-white focus:ring-emerald-500',
@@ -18,7 +18,7 @@
 
     $sizes = [
         'sm' => 'px-3 py-1.5 text-xs gap-1.5',
-        'md' => 'px-4 py-2 text-sm gap-2',
+        'md' => 'px-5 py-3 text-sm gap-2',
         'lg' => 'px-6 py-3 text-base gap-2.5',
     ];
 

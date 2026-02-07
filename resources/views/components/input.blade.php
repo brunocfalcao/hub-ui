@@ -19,7 +19,7 @@
     $hasError = $error || $errors->has($name);
     $errorMessage = $error ?? $errors->first($name);
 
-    $inputClasses = 'block w-full border rounded-md shadow-sm text-neutral-100 placeholder-neutral-500 focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-900 transition';
+    $inputClasses = 'block w-full px-4 py-3 text-sm border rounded-lg shadow-sm text-neutral-100 placeholder-neutral-500 focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-900 transition';
 
     if ($hasError) {
         $inputClasses .= ' border-red-500 bg-red-900/10 focus:border-red-500 focus:ring-red-500';
@@ -32,7 +32,7 @@
     }
 @endphp
 
-<div {{ $attributes->only('class')->merge(['class' => 'space-y-1']) }}>
+<div {{ $attributes->only('class')->merge(['class' => 'space-y-2']) }}>
     @if($label)
         <label for="{{ $inputId }}" class="block text-sm font-medium text-neutral-300">
             {{ $label }}
