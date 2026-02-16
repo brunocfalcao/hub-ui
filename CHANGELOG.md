@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-02-16
+
+### Improvements
+
+- [IMPROVED] Sidebar — added animated sliding background tile that follows the active navigation item with smooth transitions
+- [IMPROVED] Sidebar sections — removed per-item background highlights in favor of the shared sliding tile
+- [IMPROVED] Sidebar links — added `name` prop and `data-nav-item` attribute for tile tracking
+- [IMPROVED] Sidebar child links — click now updates highlight immediately with 300ms delay before Turbo navigation for visual feedback
+- [IMPROVED] Sidebar accordion — changed collapse animation to 300ms duration (`x-collapse.duration.300ms`)
+
 ## [1.0.0] - 2026-02-02
 
 ### Added

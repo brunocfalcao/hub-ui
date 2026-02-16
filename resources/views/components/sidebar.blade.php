@@ -1,47 +1,51 @@
 {{-- Sidebar Component --}}
-{{--
-    This is a reusable sidebar wrapper that provides:
-    - Alpine.js accordion state management
-    - localStorage persistence for open section
-    - Slots for logo, navigation, and footer
-
-    Usage:
-    <x-hub-ui::sidebar :activeSection="'servers'">
-        <x-slot:logo>
-            <a href="{{ route('dashboard') }}">
-                <x-my-app-logo />
-            </a>
-        </x-slot:logo>
-
-        <!-- Navigation goes in default slot -->
-        <x-hub-ui::sidebar.section name="servers" label="Servers">
-            <x-slot:icon>...</x-slot:icon>
-            <x-hub-ui::sidebar.link href="/servers" :active="true" child>All Servers</x-hub-ui::sidebar.link>
-        </x-hub-ui::sidebar.section>
-
-        <x-slot:footer>
-            <!-- User avatar, logout, etc. -->
-        </x-slot:footer>
-    </x-hub-ui::sidebar>
---}}
 @props([
     'activeSection' => null,
+    'activeHighlight' => null,
 ])
 
 @php
     $persistence = config('hub-ui.sidebar.persistence', true);
+    $initialHighlight = $activeHighlight ?? $activeSection ?? '';
 @endphp
 
 <div class="flex flex-col h-full items-center py-6"
      x-data="{
          open: null,
+         highlight: '{{ $initialHighlight }}',
+         tileTop: 0,
+         tileHeight: 0,
+         tileVisible: false,
+         tileReady: false,
+         _raf: null,
+         updateTile() {
+             const nav = this.$refs.nav;
+             if (!nav) return;
+             const target = nav.querySelector(`[data-nav-item='${this.highlight}']`);
+             if (target) {
+                 const navRect = nav.getBoundingClientRect();
+                 const targetRect = target.getBoundingClientRect();
+                 this.tileTop = targetRect.top - navRect.top;
+                 this.tileHeight = targetRect.height;
+                 this.tileVisible = true;
+             } else {
+                 this.tileVisible = false;
+             }
+         },
+         trackTile() {
+             if (this._raf) cancelAnimationFrame(this._raf);
+             const start = performance.now();
+             const tick = () => {
+                 this.updateTile();
+                 if (performance.now() - start < 400) this._raf = requestAnimationFrame(tick);
+             };
+             tick();
+         },
          init() {
-             // Use provided active section or restore from localStorage
              const activeSection = '{{ $activeSection ?? '' }}';
              const saved = {{ $persistence ? 'localStorage.getItem(\'sidebar_open\')' : 'null' }};
              this.open = activeSection || saved || null;
 
-             // Watch for changes and persist
              @if($persistence)
              this.$watch('open', (value) => {
                  if (value) {
@@ -51,6 +55,16 @@
                  }
              });
              @endif
+
+             this.$nextTick(() => {
+                 this.updateTile();
+                 requestAnimationFrame(() => {
+                     this.tileReady = true;
+                 });
+             });
+
+             this.$watch('open', () => this.trackTile());
+             this.$watch('highlight', () => this.trackTile());
          }
      }">
 
@@ -74,7 +88,13 @@
     </div>
 
     {{-- Navigation --}}
-    <nav class="flex flex-col gap-2 w-full px-2">
+    <nav class="flex flex-col gap-2 w-full px-2 relative" x-ref="nav">
+        {{-- Sliding background tile --}}
+        <div
+            class="absolute inset-x-0 mx-2 rounded-xl bg-white/5 pointer-events-none z-0"
+            :class="tileReady ? 'transition-all duration-300 ease-in-out' : ''"
+            :style="`top: ${tileTop}px; height: ${tileHeight}px; opacity: ${tileVisible ? 1 : 0}`"
+        ></div>
         {{ $slot }}
     </nav>
 
