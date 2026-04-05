@@ -1,139 +1,113 @@
 # Theming
 
-Hub UI uses CSS custom properties (variables) for theming, making it easy to customize colors without modifying component files.
+Hub UI uses a dynamic CSS custom property system. Define your brand colors as hex values in config, and the `Theme` class generates all surface, border, and text variables automatically for both dark and light modes.
+
+## How It Works
+
+1. You set hex colors in `config/hub-ui.php` under `theme.colors`
+2. `Theme::cssVariables($mode)` generates CSS variables at runtime
+3. Variables are injected via the `styles.blade.php` partial
+4. Dark mode uses `:root`, light mode uses `:root.light`
 
 ## CSS Custom Properties
 
-The default theme is defined in `resources/css/hub-ui.css`:
+### Semantic Colors (same in both modes)
+
+For each configured color (primary, secondary, success, warning, danger, info):
+
+| Variable | Description |
+|----------|-------------|
+| `--ui-{name}` | Base color as RGB (e.g., `16 185 129`) |
+| `--ui-{name}-hover` | Darker variant (lightness - 8) |
+| `--ui-{name}-soft` | Lighter variant (lightness + 15) |
+
+### Surface Colors (mode-dependent)
+
+| Variable | Dark Mode | Light Mode |
+|----------|-----------|------------|
+| `--ui-bg-body` | Very dark (5% L) | Very light (96% L) |
+| `--ui-bg-sidebar` | Darker than body (4% L) | Lighter than body (98% L) |
+| `--ui-bg-card` | Slightly lighter (9% L) | White |
+| `--ui-bg-input` | Input background (12% L) | White |
+| `--ui-bg-elevated` | Elevated surface (14% L) | White |
+| `--ui-border` | Subtle border (20% L) | Light border (88% L) |
+| `--ui-border-light` | Lighter border (26% L) | Very light border (92% L) |
+| `--ui-text` | Light (`245 245 245`) | Dark (`23 23 23`) |
+| `--ui-text-muted` | Medium (`163 163 163`) | Medium (`82 82 82`) |
+| `--ui-text-subtle` | Dim (`115 115 115`) | Dim (`140 140 140`) |
+| `--ui-ring-offset` | Same as body | Same as body |
+
+Surface colors are derived from the primary color's hue, giving a subtle brand tint.
+
+## Using CSS Variables
+
+All values are RGB without the `rgb()` wrapper, enabling Tailwind opacity modifiers:
 
 ```css
-:root {
-    /* Primary accent color (RGB values) */
-    --ui-color-primary: 16 185 129;           /* emerald-500 */
-    --ui-color-primary-hover: 5 150 105;      /* emerald-600 */
-    --ui-color-primary-light: 110 231 183;    /* emerald-300 */
+/* Solid color */
+background-color: rgb(var(--ui-primary));
 
-    /* Background colors */
-    --ui-bg-body: 26 30 46;                   /* #1a1e2e */
-    --ui-bg-sidebar: 21 24 32;               /* #151820 */
-    --ui-bg-card: 26 35 50;                  /* #1a2332 */
-    --ui-bg-input: 38 38 38;                 /* neutral-800 */
+/* With opacity */
+background-color: rgb(var(--ui-primary) / 0.12);
 
-    /* Border colors */
-    --ui-border: 64 64 64;                   /* neutral-700 */
+/* In Tailwind arbitrary values */
+<div class="bg-[rgb(var(--ui-primary)/0.1)]">
+```
 
-    /* Text colors */
-    --ui-text: 245 245 245;                  /* neutral-100 */
-    --ui-text-muted: 163 163 163;            /* neutral-400 */
-}
+## CSS Utility Classes
+
+### Surfaces
+`.ui-bg-body`, `.ui-bg-sidebar`, `.ui-bg-card`, `.ui-bg-input`, `.ui-bg-elevated`
+
+### Borders
+`.ui-border`, `.ui-border-light`
+
+### Text
+`.ui-text`, `.ui-text-muted`, `.ui-text-subtle`
+
+### Semantic Colors
+For each color (primary, secondary, success, warning, danger, info):
+- `.ui-text-{color}` — text color
+- `.ui-bg-{color}` — background color
+
+## Dark/Light Mode
+
+The theme toggle is built in via `<x-hub-ui::theme-toggle />`. It:
+
+1. Toggles the `light` class on `<html>`
+2. Persists preference in `localStorage['hub-ui-theme']`
+3. Runs a synchronous script to prevent FOUC
+
+### JavaScript API
+
+```javascript
+window.hubUiSetTheme('light');  // Set to light mode
+window.hubUiSetTheme('dark');   // Set to dark mode
+window.hubUiToggleTheme();      // Toggle between modes
+window.hubUiGetTheme();         // Returns 'light' or 'dark'
 ```
 
 ## Customizing Colors
 
-Override these variables in your application's CSS:
+Change the brand colors in config:
 
-```css
-/* resources/css/app.css */
-@import './vendor/hub-ui/hub-ui.css';
-
-:root {
-    /* Change primary color to blue */
-    --ui-color-primary: 59 130 246;           /* blue-500 */
-    --ui-color-primary-hover: 37 99 235;      /* blue-600 */
-    --ui-color-primary-light: 147 197 253;    /* blue-300 */
-
-    /* Darker background */
-    --ui-bg-body: 15 23 42;                   /* slate-900 */
-}
+```php
+// config/hub-ui.php
+'theme' => [
+    'colors' => [
+        'primary' => '#3b82f6', // Blue
+        // ... other colors
+    ],
+],
 ```
 
-## Color Values
+All surface colors, hover states, and soft variants are derived automatically.
 
-CSS custom properties use RGB values without the `rgb()` wrapper. This allows Tailwind's opacity modifiers to work:
+## Blade Directives
 
-```css
-/* These RGB values... */
---ui-color-primary: 16 185 129;
-
-/* ...can be used like this in Tailwind */
-.custom-class {
-    background-color: rgb(var(--ui-color-primary));
-    background-color: rgb(var(--ui-color-primary) / 0.5); /* 50% opacity */
-}
-```
-
-## Tailwind Integration
-
-You can reference these variables in your Tailwind config:
-
-```javascript
-// tailwind.config.js
-module.exports = {
-    theme: {
-        extend: {
-            colors: {
-                'ui-primary': 'rgb(var(--ui-color-primary) / <alpha-value>)',
-                'ui-body': 'rgb(var(--ui-bg-body) / <alpha-value>)',
-            },
-        },
-    },
-}
-```
-
-Then use in your templates:
+If building a custom layout without the dashboard component:
 
 ```blade
-<div class="bg-ui-primary text-white">
-    Custom themed element
-</div>
+@hubUiStyles   {{-- Outputs theme CSS variables --}}
+@hubUiScripts  {{-- Outputs theme toggle JavaScript --}}
 ```
-
-## Common Color Schemes
-
-### Blue Theme
-```css
-:root {
-    --ui-color-primary: 59 130 246;
-    --ui-color-primary-hover: 37 99 235;
-    --ui-color-primary-light: 147 197 253;
-}
-```
-
-### Purple Theme
-```css
-:root {
-    --ui-color-primary: 168 85 247;
-    --ui-color-primary-hover: 147 51 234;
-    --ui-color-primary-light: 216 180 254;
-}
-```
-
-### Rose Theme
-```css
-:root {
-    --ui-color-primary: 244 63 94;
-    --ui-color-primary-hover: 225 29 72;
-    --ui-color-primary-light: 253 164 175;
-}
-```
-
-## Dynamic Tailwind Classes
-
-The `<x-hub-ui::status>` component uses dynamic Tailwind classes. Add a safelist to your Tailwind config:
-
-```javascript
-// tailwind.config.js
-module.exports = {
-    safelist: [
-        { pattern: /^(bg|text)-(red|green|blue|yellow|gray|emerald|amber)-(300|400|500)$/ },
-    ],
-}
-```
-
-## Dark Mode Only
-
-Hub UI is designed as a dark-theme-only package. If you need light mode support, you'll need to:
-
-1. Publish the views: `php artisan vendor:publish --tag=hub-ui-views`
-2. Modify the components to support `dark:` variants
-3. Update the CSS custom properties with `@media (prefers-color-scheme: light)` overrides

@@ -1,22 +1,25 @@
 # Sidebar
 
-The sidebar component provides an accordion-style navigation with localStorage persistence.
+Accordion-style navigation sidebar with sliding background tile and localStorage persistence.
 
 ## Components
 
-- `<x-hub-ui::sidebar>` - Main sidebar wrapper
-- `<x-hub-ui::sidebar.section>` - Accordion section with collapsible children
-- `<x-hub-ui::sidebar.link>` - Navigation link
-- `<x-hub-ui::sidebar.logo>` - Default logo (can be replaced)
+| Component | Description |
+|-----------|-------------|
+| `<x-hub-ui::sidebar>` | Main sidebar wrapper |
+| `<x-hub-ui::sidebar.section>` | Accordion section with collapsible children |
+| `<x-hub-ui::sidebar.link>` | Navigation link (child of section) |
+| `<x-hub-ui::sidebar.logo>` | Default Hub UI logo |
+| `<x-hub-ui::theme-toggle>` | Dark/light theme toggle button |
 
 ## Sidebar Wrapper
 
 ```blade
-<x-hub-ui::sidebar :activeSection="'servers'">
-    {{-- Navigation content --}}
+<x-hub-ui::sidebar :activeSection="'servers'" :activeHighlight="'all-servers'">
+    {{-- Navigation items --}}
 
     <x-slot:footer>
-        {{-- User avatar, logout button, etc. --}}
+        <x-hub-ui::theme-toggle />
     </x-slot:footer>
 </x-hub-ui::sidebar>
 ```
@@ -25,32 +28,45 @@ The sidebar component provides an accordion-style navigation with localStorage p
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `activeSection` | string | `null` | Section name to open by default |
+| `activeSection` | string\|null | `null` | Section name to open on load |
+| `activeHighlight` | string\|null | `null` | Nav item to highlight on load |
 
 ### Slots
 
 | Slot | Description |
 |------|-------------|
 | `default` | Navigation sections and links |
-| `logo` | Custom logo (overrides config) |
-| `footer` | Footer content (user avatar, etc.) |
+| `logo` | Custom logo (overrides config `app.logo`) |
+| `footer` | Footer content (theme toggle, user avatar, logout) |
+
+### Alpine.js Data
+
+The sidebar exposes these Alpine.js properties for nav items to interact with:
+
+| Property | Description |
+|----------|-------------|
+| `open` | Currently opened section name (or `null`) |
+| `highlight` | Currently highlighted nav item name |
+
+Nav items should use `data-nav-item="name"` and `:class` bindings to react to `highlight`.
+
+### Sliding Background Tile
+
+The sidebar has a sliding background element that follows the highlighted nav item. Items with `data-nav-item` are tracked. The tile transitions smoothly between items.
 
 ## Section
 
-Accordion-style parent with collapsible children.
+Accordion parent — click to toggle children.
 
 ```blade
 <x-hub-ui::sidebar.section name="servers" label="Servers">
     <x-slot:icon>
-        <svg class="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.25 14.25h13.5..." />
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 14.25h13.5..." />
         </svg>
     </x-slot:icon>
 
-    {{-- Child links --}}
-    <x-hub-ui::sidebar.link href="/servers" :active="true" child>
-        All Servers
-    </x-hub-ui::sidebar.link>
+    {{-- Child links go here --}}
 </x-hub-ui::sidebar.section>
 ```
 
@@ -58,138 +74,96 @@ Accordion-style parent with collapsible children.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `name` | string | `''` | Unique identifier for accordion state |
-| `label` | string | `''` | Display text |
+| `name` | string | `''` | Unique section identifier (for accordion tracking) |
+| `label` | string | `''` | Display label |
 
 ### Slots
 
 | Slot | Description |
 |------|-------------|
 | `default` | Child links |
-| `icon` | Section icon |
+| `icon` | Section icon (SVG, `w-full h-full`) |
 
-## Link
+## Standalone Nav Items
 
-Navigation link with icon and label.
+For top-level items that aren't inside a section (like "Dashboard"), add them directly to the sidebar slot:
 
 ```blade
-<x-hub-ui::sidebar.link
-    href="/servers"
-    :active="request()->routeIs('servers.*')"
-    child
+<a
+    href="{{ route('dashboard') }}" wire:navigate
+    data-nav-item="dashboard"
+    @click="highlight = 'dashboard'; open = null;"
+    class="flex flex-col items-center gap-1 py-2 rounded-xl cursor-pointer transition-colors relative z-10"
+    :class="highlight === 'dashboard' ? 'ui-sidebar-text-active' : 'ui-sidebar-text hover:ui-text-muted'"
 >
-    <x-slot:icon>
-        <svg>...</svg>
-    </x-slot:icon>
-    All Servers
-</x-hub-ui::sidebar.link>
+    <span class="w-7 h-7">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 ..." />
+        </svg>
+    </span>
+    <span class="text-xs">Dashboard</span>
+</a>
 ```
 
-### Props
+Key attributes:
+- `data-nav-item="name"` — enables tile tracking
+- `@click="highlight = 'name'; open = null;"` — sets highlight and closes any open section
+- `:class` — toggles between `ui-sidebar-text-active` and `ui-sidebar-text`
+- `relative z-10` — ensures content appears above the sliding tile
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `href` | string | `'#'` | Link URL |
-| `active` | bool | `false` | Highlight as active |
-| `child` | bool | `false` | Render as child item (smaller, no background) |
+## Child Links Inside Sections
+
+```blade
+<a
+    href="/servers" wire:navigate
+    data-nav-item="all-servers"
+    @click="highlight = 'all-servers'"
+    class="flex flex-col items-center gap-1 py-2 rounded-lg transition-colors relative z-10"
+    :class="highlight === 'all-servers' ? 'ui-sidebar-text-active' : 'ui-sidebar-text hover:ui-text-muted'"
+>
+    <span class="w-5 h-5">
+        <svg>...</svg>
+    </span>
+    <span class="text-xs">All Servers</span>
+</a>
+```
+
+Child links use smaller icons (`w-5 h-5`) vs top-level (`w-7 h-7`).
 
 ## Custom Logo
 
-### Option 1: Config
+### Via config
 
 ```php
 // config/hub-ui.php
-'app' => [
-    'logo' => 'components.my-logo',
-],
+'app' => ['logo' => 'components.my-logo'],
 ```
 
-### Option 2: Slot
+### Via slot (takes precedence)
 
 ```blade
 <x-hub-ui::sidebar>
     <x-slot:logo>
         <a href="{{ route('dashboard') }}">
-            <x-my-app-logo />
+            <img src="/logo.svg" class="w-10 h-10" />
         </a>
     </x-slot:logo>
-
-    {{-- Navigation --}}
+    {{-- ... --}}
 </x-hub-ui::sidebar>
 ```
 
-## Complete Example
+## Theme Toggle
 
 ```blade
-<x-hub-ui::sidebar :activeSection="request()->routeIs('servers.*') ? 'servers' : ''">
-    <x-slot:logo>
-        <a href="{{ route('dashboard') }}">
-            <x-application-logo class="w-14 h-14" />
-        </a>
-    </x-slot:logo>
-
-    {{-- Home (standalone link) --}}
-    <x-hub-ui::sidebar.link
-        href="{{ route('dashboard') }}"
-        :active="request()->routeIs('dashboard')"
-    >
-        <x-slot:icon>
-            <svg class="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 12l8.954-8.955..." />
-            </svg>
-        </x-slot:icon>
-        Home
-    </x-hub-ui::sidebar.link>
-
-    {{-- Servers Section --}}
-    <x-hub-ui::sidebar.section name="servers" label="Servers">
-        <x-slot:icon>
-            <svg class="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path d="M5.25 14.25h13.5..." />
-            </svg>
-        </x-slot:icon>
-
-        <x-hub-ui::sidebar.link href="{{ route('servers.index') }}" :active="request()->routeIs('servers.index')" child>
-            <x-slot:icon>
-                <svg class="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path d="M8.25 6.75h12..." />
-                </svg>
-            </x-slot:icon>
-            All Servers
-        </x-hub-ui::sidebar.link>
-
-        <x-hub-ui::sidebar.link href="{{ route('servers.create') }}" :active="request()->routeIs('servers.create')" child>
-            <x-slot:icon>
-                <svg class="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 4.5v15m7.5-7.5h-15" />
-                </svg>
-            </x-slot:icon>
-            Create Server
-        </x-hub-ui::sidebar.link>
-    </x-hub-ui::sidebar.section>
-
-    <x-slot:footer>
-        @auth
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="group" title="Sign out">
-                    <div class="w-12 h-12 rounded-full ring-2 ring-white overflow-hidden group-hover:ring-red-400 transition-colors">
-                        <img src="https://i.pravatar.cc/100?u={{ auth()->user()->email }}" alt="{{ auth()->user()->name }}" class="w-full h-full object-cover" />
-                    </div>
-                </button>
-            </form>
-        @endauth
-    </x-slot:footer>
-</x-hub-ui::sidebar>
+<x-hub-ui::theme-toggle />
 ```
+
+Renders a sun/moon icon button that toggles between dark and light mode. Usually placed in the sidebar footer.
 
 ## LocalStorage Persistence
 
-The accordion state is automatically saved to localStorage. Disable with:
+Accordion state is saved to `localStorage['sidebar_open']`. Disable:
 
 ```php
-// config/hub-ui.php
-'sidebar' => [
-    'persistence' => false,
-],
+'sidebar' => ['persistence' => false],
 ```

@@ -2,12 +2,12 @@
 
 ## Generic Modal
 
-A flexible modal component with Alpine.js.
+Flexible modal with Alpine.js, keyboard navigation, and focus management.
 
 ```blade
 <x-hub-ui::modal name="edit-user" maxWidth="lg">
     <div class="p-6">
-        <h2 class="text-lg font-medium text-white">Edit User</h2>
+        <h2 class="text-lg font-medium ui-text">Edit User</h2>
         <form>
             {{-- Form content --}}
         </form>
@@ -21,59 +21,60 @@ A flexible modal component with Alpine.js.
 |------|------|---------|-------------|
 | `name` | string | **required** | Unique modal identifier |
 | `show` | bool | `false` | Initial visibility |
-| `maxWidth` | string | `'2xl'` | Max width (sm, md, lg, xl, 2xl) |
+| `maxWidth` | string | `'2xl'` | Max width: `sm`, `md`, `lg`, `xl`, `2xl` |
 
-### Opening/Closing
+### Opening / Closing
 
 Use Alpine.js events:
 
 ```blade
-{{-- Open modal --}}
-<button @click="$dispatch('open-modal', 'edit-user')">
-    Edit User
-</button>
+{{-- Open --}}
+<button @click="$dispatch('open-modal', 'edit-user')">Edit User</button>
 
-{{-- Close from inside modal --}}
-<button @click="$dispatch('close-modal', 'edit-user')">
-    Cancel
-</button>
+{{-- Close from inside --}}
+<button @click="$dispatch('close-modal', 'edit-user')">Cancel</button>
 ```
 
 ### Keyboard Navigation
 
-- **Escape** - Closes the modal
-- **Tab** - Cycles through focusable elements
-- **Shift+Tab** - Reverse tab navigation
+- **Escape** — closes the modal
+- **Tab** — cycles through focusable elements
+- **Shift+Tab** — reverse tab
 
-### Focusable Elements
+### Auto-Focus
 
-Add the `focusable` attribute to auto-focus the first element:
+Add `focusable` attribute to focus the first element on open:
 
 ```blade
 <x-hub-ui::modal name="confirm" focusable>
-    {{-- First focusable element will be focused --}}
+    {{-- First focusable element gets focus --}}
 </x-hub-ui::modal>
 ```
 
+### Features
+
+- Backdrop click closes the modal
+- Body scroll is locked while open (`overflow-y-hidden`)
+- Uses `.ui-elevated` styling (themed background + border)
+
 ## Confirmation Modal
 
-Pre-built confirmation dialog for dangerous actions.
+Pre-built confirmation dialog for dangerous or cautionary actions.
 
 ### Usage via JavaScript
 
 ```javascript
 window.showConfirmation({
     title: 'Delete Server',
-    message: 'This will permanently delete the server and all its data. This action cannot be undone.',
+    message: 'This will permanently delete the server. This action cannot be undone.',
     confirmText: 'Delete',
     cancelText: 'Cancel',
     type: 'danger',
     onConfirm: () => {
-        // Handle confirmation
         deleteServer(serverId);
     },
     onCancel: () => {
-        // Handle cancellation (optional)
+        // Optional
     }
 });
 ```
@@ -86,15 +87,17 @@ window.showConfirmation({
 | `message` | string | `''` | Message text |
 | `confirmText` | string | `'Confirm'` | Confirm button text |
 | `cancelText` | string | `'Cancel'` | Cancel button text |
-| `type` | string | `'danger'` | Type (danger, warning, info) |
+| `type` | string | `'danger'` | Color type: `danger`, `warning`, `info` |
 | `onConfirm` | function | `null` | Callback on confirm |
 | `onCancel` | function | `null` | Callback on cancel |
 
 ### Types
 
-- `danger` - Red styling (for destructive actions)
-- `warning` - Amber styling (for cautionary actions)
-- `info` - Blue styling (for informational confirmations)
+| Type | Confirm Button Color |
+|------|---------------------|
+| `danger` | Red |
+| `warning` | Amber |
+| `info` | Blue |
 
 ### Example: Delete with Form
 
@@ -135,38 +138,24 @@ window.showConfirmation({
 
 ## Setup
 
-### Include in Layout
-
 The confirmation modal is automatically included in the dashboard layout when `config('hub-ui.features.confirmation')` is `true`.
 
-For custom layouts:
+For custom layouts, add manually:
 
 ```blade
-{{-- At the end of your body --}}
+{{-- At the end of body --}}
 <x-hub-ui::modal-confirmation />
 ```
 
 ### Initialize JavaScript
 
 ```javascript
-// resources/js/app.js
 import { initConfirmation } from './vendor/hub-ui/hub-ui.js';
-
-document.addEventListener('DOMContentLoaded', function() {
-    initConfirmation();
-});
-
-// With Turbo:
-document.addEventListener('turbo:load', function() {
-    initConfirmation();
-});
+document.addEventListener('DOMContentLoaded', () => initConfirmation());
 ```
 
-## Disable Confirmation Modal
+### Disable
 
 ```php
-// config/hub-ui.php
-'features' => [
-    'confirmation' => false,
-],
+'features' => ['confirmation' => false],
 ```

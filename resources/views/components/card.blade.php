@@ -5,18 +5,14 @@
     'footer' => null,
 ])
 
-@php
-    $bgColor = config('hub-ui.layout.colors.card', '#1a2332');
-@endphp
-
-<div {{ $attributes->merge(['class' => 'border border-white/10 rounded-lg shadow-lg overflow-hidden']) }} style="background-color: {{ $bgColor }}">
+<div {{ $attributes->merge(['class' => 'ui-card overflow-hidden shadow-lg']) }}>
     @if($title || $subtitle)
-        <div class="px-8 py-5 border-b border-white/10">
+        <div class="px-8 py-5 ui-card-header">
             @if($title)
-                <h3 class="text-lg font-semibold text-white">{{ $title }}</h3>
+                <h3 class="text-lg font-semibold ui-text">{{ $title }}</h3>
             @endif
             @if($subtitle)
-                <p class="text-sm text-white/60 mt-1">{{ $subtitle }}</p>
+                <p class="text-sm ui-text-muted mt-1">{{ $subtitle }}</p>
             @endif
         </div>
     @endif
@@ -26,7 +22,7 @@
     </div>
 
     @if($footer)
-        <div class="px-8 py-5 bg-black/20 border-t border-white/10">
+        <div class="px-8 py-5 ui-card-footer" style="background-color: rgb(0 0 0 / 0.15)">
             {{ $footer }}
         </div>
     @endif

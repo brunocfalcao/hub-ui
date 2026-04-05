@@ -6,7 +6,7 @@ Container with optional title, subtitle, and footer.
 
 ```blade
 <x-hub-ui::card title="Server Details" subtitle="Configuration and status">
-    <p>Card content goes here.</p>
+    <p class="ui-text">Card content goes here.</p>
 
     <x-slot:footer>
         <x-hub-ui::button>Save Changes</x-hub-ui::button>
@@ -20,18 +20,41 @@ Container with optional title, subtitle, and footer.
 |------|------|---------|-------------|
 | `title` | string | `null` | Card title |
 | `subtitle` | string | `null` | Subtitle below title |
-| `padding` | bool | `true` | Add padding to content |
-| `footer` | slot | `null` | Footer content |
+| `padding` | bool | `true` | Apply `px-8 py-7` padding to content |
+| `footer` | slot | `null` | Footer content (has darker background) |
 
 ### Without Padding
 
+Useful for edge-to-edge content like tables:
+
 ```blade
-<x-hub-ui::card :padding="false">
-    <table class="w-full">
-        {{-- Table without extra padding --}}
-    </table>
+<x-hub-ui::card title="Servers" :padding="false">
+    <x-hub-ui::data-table :columns="$columns" :rows="$rows" />
 </x-hub-ui::card>
 ```
+
+### CSS Classes
+
+- `.ui-card` — container (bg, border, rounded)
+- `.ui-card-header` — title/subtitle area (border-bottom)
+- `.ui-card-footer` — footer area (border-top, darker bg)
+
+## Page Header
+
+Page title with optional description.
+
+```blade
+<x-hub-ui::page-header title="Servers" description="Manage your server infrastructure" />
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | string | **required** | Page title (`text-5xl font-medium`) |
+| `description` | string | `null` | Description (`text-sm`, subtle color) |
+
+Has `mb-8` bottom margin by default. Override via attributes.
 
 ## Badge
 
@@ -48,24 +71,27 @@ Small label/tag for status or categories.
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `type` | string | `'default'` | Color type |
-| `size` | string | `'md'` | Size (sm, md, lg) |
-| `dot` | bool | `false` | Show status dot |
+| `size` | string | `'md'` | Size: `sm`, `md`, `lg` |
+| `dot` | bool | `false` | Show colored dot before text |
 
 ### Types
 
-- `default` - Gray
-- `primary` - Emerald/green
-- `success` - Green
-- `warning` - Amber
-- `danger` - Red
-- `info` - Blue
-- `online` - Green (status)
-- `offline` - Gray (status)
-- `pending` - Emerald tint
+| Type | Description |
+|------|-------------|
+| `default` | Gray (elevated bg, muted text) |
+| `primary` | Primary color |
+| `secondary` | Secondary color |
+| `success` | Green |
+| `warning` | Amber |
+| `danger` | Red |
+| `info` | Blue |
+| `online` | Green (alias for success) |
+| `offline` | Gray (alias for default) |
+| `pending` | Primary with 80% opacity |
 
 ## Alert
 
-Notification banner with icon.
+Notification banner with icon and optional dismiss.
 
 ```blade
 <x-hub-ui::alert type="success" title="Success!">
@@ -82,65 +108,70 @@ Notification banner with icon.
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `type` | string | `'info'` | Alert type |
-| `title` | string | `null` | Optional title |
-| `dismissible` | bool | `false` | Show dismiss button |
+| `title` | string | `null` | Optional bold title above message |
+| `dismissible` | bool | `false` | Show dismiss button (uses Alpine.js) |
 
 ### Types
 
-- `info` - Blue
-- `success` - Green
-- `warning` - Yellow
-- `error` / `danger` - Red
+| Type | Color | Icon |
+|------|-------|------|
+| `info` | Blue | Info circle |
+| `success` | Green | Check circle |
+| `warning` | Yellow | Warning triangle |
+| `error` | Red | X circle |
+| `danger` | Red | X circle (alias for error) |
 
 ## Status
 
-Inline status indicator with optional animation.
+Inline status indicator with colored dot.
 
 ```blade
-<x-hub-ui::status color="emerald" label="Connected" />
-<x-hub-ui::status color="red" label="Error" title="Connection failed" />
-<x-hub-ui::status color="blue" label="Processing" :animated="true" />
+<x-hub-ui::status type="success" label="Connected" />
+<x-hub-ui::status type="danger" label="Error" />
+<x-hub-ui::status type="info" label="Processing" :animated="true" />
 ```
 
 ### Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `color` | string | `'gray'` | Tailwind color name |
+| `type` | string | `'default'` | Color type |
 | `label` | string | **required** | Status text |
-| `animated` | bool | `false` | Show pulsing animation |
+| `animated` | bool | `false` | Show pulsing animation on dot |
 
-### Tailwind Safelist
+### Types
 
-This component uses dynamic classes. Add to your `tailwind.config.js`:
+Uses theme CSS variables: `primary`, `success`, `warning`, `danger`, `info`, `secondary`, `default`.
 
-```javascript
-safelist: [
-    { pattern: /^(bg|text)-(red|green|blue|yellow|gray|emerald|amber)-(300|400|500)$/ },
-]
-```
+## Spinner
 
-## Page Header
-
-Page title with optional description.
+Animated loading indicator.
 
 ```blade
-<x-hub-ui::page-header
-    title="Servers"
-    description="Manage your server infrastructure"
-/>
+<x-hub-ui::spinner />
+<x-hub-ui::spinner size="lg" color="primary" />
 ```
 
 ### Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `title` | string | **required** | Page title |
-| `description` | string | `null` | Description text |
+| `size` | string | `'md'` | Size: `xs`, `sm`, `md`, `lg`, `xl` |
+| `color` | string | `'current'` | Color: `current`, `white`, `primary` |
+
+### Sizes
+
+| Size | Class |
+|------|-------|
+| `xs` | `h-3 w-3` |
+| `sm` | `h-4 w-4` |
+| `md` | `h-6 w-6` |
+| `lg` | `h-8 w-8` |
+| `xl` | `h-12 w-12` |
 
 ## Empty State
 
-Placeholder for empty lists/tables.
+Placeholder for empty lists or tables.
 
 ```blade
 <x-hub-ui::empty-state
@@ -162,13 +193,40 @@ Placeholder for empty lists/tables.
 |------|------|---------|-------------|
 | `title` | string | **required** | Title text |
 | `description` | string | `null` | Description text |
-| `action` | array | `null` | Action button `['href' => ..., 'label' => ...]` |
+| `action` | array | `null` | Action button: `['href' => '...', 'label' => '...']` |
 
 ### Slots
 
 | Slot | Description |
 |------|-------------|
-| `icon` | Icon displayed above title |
+| `icon` | Icon above the title (rendered inside a rounded elevated container) |
+
+The action button renders as a secondary button with a `+` icon.
+
+## Data Table
+
+Simple table from arrays.
+
+```blade
+<x-hub-ui::data-table
+    :columns="['Name', 'Status', 'Region']"
+    :rows="[
+        ['Name' => 'Server 1', 'Status' => 'Active', 'Region' => 'US East'],
+        ['Name' => 'Server 2', 'Status' => 'Offline', 'Region' => 'EU West'],
+    ]"
+    empty="No servers found."
+/>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `columns` | array | `[]` | Column headers (also used as row keys) |
+| `rows` | array | `[]` | Array of associative arrays keyed by column names |
+| `empty` | string | `'No results.'` | Message when no rows |
+
+Shows a row count below the table. Cells truncate with a `title` attribute for full text on hover.
 
 ## Dropdown
 
@@ -177,9 +235,7 @@ Click-triggered dropdown menu.
 ```blade
 <x-hub-ui::dropdown align="right">
     <x-slot:trigger>
-        <x-hub-ui::button variant="secondary">
-            Actions
-        </x-hub-ui::button>
+        <x-hub-ui::button variant="secondary">Actions</x-hub-ui::button>
     </x-slot:trigger>
 
     <x-slot:content>
@@ -193,24 +249,25 @@ Click-triggered dropdown menu.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `align` | string | `'right'` | Alignment (left, right, top) |
-| `width` | string | `'48'` | Width class (Tailwind) |
-| `contentClasses` | string | `'py-1 bg-neutral-800'` | Content container classes |
+| `align` | string | `'right'` | Alignment: `left`, `right`, `top` |
+| `width` | string | `'w-48'` | Width (Tailwind class) |
+| `contentClasses` | string | `'py-1'` | Additional classes for content |
 
 ### Slots
 
 | Slot | Description |
 |------|-------------|
-| `trigger` | Button/element that triggers the dropdown |
+| `trigger` | Element that triggers the dropdown |
 | `content` | Dropdown content (links, buttons) |
+
+Closes on click-outside. Uses Alpine.js for toggle.
 
 ## Dropdown Link
 
-Link item for dropdown content.
+Link item for dropdown content. All attributes passed through to the `<a>` element.
 
 ```blade
 <x-hub-ui::dropdown-link href="/profile">Profile</x-hub-ui::dropdown-link>
-<x-hub-ui::dropdown-link href="/settings">Settings</x-hub-ui::dropdown-link>
 ```
 
-All attributes are passed through to the `<a>` element.
+Uses `.ui-dropdown-link` styling (muted text, hover: card bg + full text).

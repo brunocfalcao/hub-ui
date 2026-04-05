@@ -10,12 +10,12 @@
     <button
         type="button"
         @click="
-            open = open === '{{ $name }}' ? null : '{{ $name }}';
+            open = '{{ $name }}';
             highlight = '{{ $name }}';
         "
         data-nav-item="{{ $name }}"
         class="w-full flex flex-col items-center gap-1 py-2 rounded-xl cursor-pointer transition-colors relative"
-        :class="open === '{{ $name }}' ? 'text-white' : 'text-white/40 hover:text-white/60'"
+        :class="open === '{{ $name }}' ? 'ui-sidebar-text-active' : 'ui-sidebar-text hover:ui-text-muted'"
     >
         @if($icon)
             <span class="w-7 h-7">

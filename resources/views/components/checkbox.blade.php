@@ -24,18 +24,18 @@
             value="{{ $value }}"
             @checked($isChecked)
             @if($disabled) disabled @endif
-            class="rounded border-neutral-700 bg-neutral-800 text-emerald-600 shadow-sm focus:ring-emerald-500 focus:ring-offset-neutral-900 @if($disabled) opacity-50 cursor-not-allowed @endif"
+            class="rounded shadow-sm focus:ring-offset-2 ui-checkbox @if($disabled) opacity-50 cursor-not-allowed @endif"
         >
         @if($label)
-            <span class="ms-2 text-sm text-neutral-300">{{ $label }}</span>
+            <span class="ms-2 text-sm ui-label">{{ $label }}</span>
         @endif
     </label>
 
     @if($hint && !$hasError)
-        <p class="text-sm text-neutral-500 ms-6">{{ $hint }}</p>
+        <p class="text-sm ui-hint ms-6">{{ $hint }}</p>
     @endif
 
     @if($hasError)
-        <p class="text-sm text-red-400 ms-6">{{ $errorMessage }}</p>
+        <p class="text-sm ui-error ms-6">{{ $errorMessage }}</p>
     @endif
 </div>

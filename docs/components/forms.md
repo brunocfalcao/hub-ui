@@ -18,15 +18,15 @@ Text input with label, validation, and hints.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `name` | string | **required** | Input name/id |
+| `name` | string | **required** | Input name and id |
 | `label` | string | `null` | Label text |
-| `type` | string | `'text'` | Input type (text, email, password, etc.) |
-| `value` | string | `null` | Default value |
+| `type` | string | `'text'` | HTML input type (text, email, password, number, etc.) |
+| `value` | string | `null` | Default value (respects `old()` helper) |
 | `placeholder` | string | `null` | Placeholder text |
-| `hint` | string | `null` | Help text below input |
-| `error` | string | `null` | Error message (or uses `$errors` bag) |
-| `notice` | string | `null` | Notice message (blue text) |
-| `required` | bool | `false` | Mark as required |
+| `hint` | string | `null` | Help text below input (hidden when error is shown) |
+| `error` | string | `null` | Custom error message (or uses Laravel's `$errors` bag) |
+| `notice` | string | `null` | Info notice (shown when no error) |
+| `required` | bool | `false` | Mark as required (shows `*` after label) |
 | `disabled` | bool | `false` | Disable input |
 | `readonly` | bool | `false` | Read-only input |
 | `autocomplete` | string | `null` | Autocomplete attribute |
@@ -34,12 +34,42 @@ Text input with label, validation, and hints.
 
 ### Validation Errors
 
-The component automatically shows errors from Laravel's `$errors` bag:
+Errors from Laravel's `$errors` bag are shown automatically:
 
 ```blade
-{{-- If validation fails for 'email', error shows automatically --}}
+{{-- If validation fails for 'email', the error message appears automatically --}}
 <x-hub-ui::input name="email" label="Email" type="email" />
 ```
+
+Priority: custom `error` prop > `$errors->first($name)`.
+
+### CSS Classes
+
+- `.ui-input` — base input styling
+- `.ui-input-error` — error state (red border)
+- `.ui-label` — label text
+- `.ui-hint` — hint text
+- `.ui-error` — error message text
+- `.ui-required` — required asterisk
+
+## Textarea
+
+Multi-line text input. Same props as Input, plus `rows`.
+
+```blade
+<x-hub-ui::textarea
+    name="notes"
+    label="Notes"
+    rows="5"
+    placeholder="Enter notes..."
+/>
+```
+
+### Additional Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `rows` | int | `3` | Number of visible rows |
 
 ## Select
 
@@ -59,59 +89,26 @@ Dropdown select with options.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `name` | string | **required** | Select name/id |
+| `name` | string | **required** | Select name and id |
 | `label` | string | `null` | Label text |
-| `value` | string | `null` | Selected value |
+| `value` | string | `null` | Selected value (respects `old()`) |
 | `options` | array | `[]` | Options as `[value => label]` |
-| `placeholder` | string | `'Select an option'` | Placeholder option |
+| `placeholder` | string | `'Select an option'` | Placeholder option (disabled) |
 | `hint` | string | `null` | Help text |
 | `error` | string | `null` | Error message |
-| `notice` | string | `null` | Notice message |
+| `notice` | string | `null` | Info notice |
 | `required` | bool | `false` | Mark as required |
 | `disabled` | bool | `false` | Disable select |
 
 ### Dynamic Options
 
 ```blade
-@php
-$serverTypes = App\Models\ServerType::pluck('name', 'id')->toArray();
-@endphp
-
 <x-hub-ui::select
-    name="server_type_id"
-    label="Server Type"
-    :options="$serverTypes"
+    name="account_id"
+    label="Account"
+    :options="App\Models\Account::pluck('name', 'id')->toArray()"
 />
 ```
-
-## Textarea
-
-Multi-line text input.
-
-```blade
-<x-hub-ui::textarea
-    name="notes"
-    label="Notes"
-    rows="5"
-    placeholder="Enter notes..."
-/>
-```
-
-### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `name` | string | **required** | Textarea name/id |
-| `label` | string | `null` | Label text |
-| `value` | string | `null` | Default value |
-| `placeholder` | string | `null` | Placeholder text |
-| `rows` | int | `3` | Number of rows |
-| `hint` | string | `null` | Help text |
-| `error` | string | `null` | Error message |
-| `notice` | string | `null` | Notice message |
-| `required` | bool | `false` | Mark as required |
-| `disabled` | bool | `false` | Disable textarea |
-| `readonly` | bool | `false` | Read-only textarea |
 
 ## Checkbox
 
@@ -129,7 +126,7 @@ Single checkbox with label.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `name` | string | **required** | Checkbox name/id |
+| `name` | string | **required** | Checkbox name and id |
 | `label` | string | `null` | Label text |
 | `value` | string | `'1'` | Value when checked |
 | `checked` | bool | `false` | Default checked state |
@@ -139,10 +136,10 @@ Single checkbox with label.
 
 ## Button
 
-Styled button with variants and sizes.
+Styled button with variants, sizes, and loading state.
 
 ```blade
-<x-hub-ui::button type="submit" variant="primary">
+<x-hub-ui::button type="submit">
     Save Changes
 </x-hub-ui::button>
 
@@ -163,29 +160,48 @@ Styled button with variants and sizes.
 | `variant` | string | `'primary'` | Style variant |
 | `size` | string | `'md'` | Size (sm, md, lg) |
 | `disabled` | bool | `false` | Disable button |
-| `loading` | bool | `false` | Show loading spinner |
-| `href` | string | `null` | Render as anchor link |
+| `loading` | bool | `false` | Show spinner (disables button) |
+| `href` | string | `null` | Render as `<a>` tag (ignored when disabled) |
+
+### Slots
+
+| Slot | Description |
+|------|-------------|
+| `default` | Button text/content |
+| `icon` | Optional icon (shown when not loading) |
 
 ### Variants
 
-- `primary` - Emerald/green background
-- `secondary` - Transparent with border
-- `danger` - Red background
-- `ghost` - Transparent, no border
-- `link` - Text link style
+| Variant | Description |
+|---------|-------------|
+| `primary` | Solid primary color background, white text |
+| `secondary` | Input background with border |
+| `danger` | Solid red background, white text |
+| `ghost` | Transparent, no border |
+| `link` | Text-only, underline on hover |
+
+### Button with Icon
+
+```blade
+<x-hub-ui::button>
+    <x-slot:icon>
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+        </svg>
+    </x-slot:icon>
+    Add Server
+</x-hub-ui::button>
+```
 
 ### Loading State
 
 ```blade
-<x-hub-ui::button
-    type="submit"
-    :loading="$isSubmitting"
-    x-bind:disabled="isSubmitting"
->
-    <span x-show="!isSubmitting">Save</span>
-    <span x-show="isSubmitting">Saving...</span>
+<x-hub-ui::button type="submit" :loading="$isSubmitting">
+    Save
 </x-hub-ui::button>
 ```
+
+When `loading` is true, the button shows a spinner and is disabled.
 
 ## Complete Form Example
 
@@ -195,41 +211,16 @@ Styled button with variants and sizes.
         @csrf
 
         <div class="space-y-4">
-            <x-hub-ui::input
-                name="name"
-                label="Server Name"
-                placeholder="my-server"
-                required
-            />
-
-            <x-hub-ui::select
-                name="region"
-                label="Region"
-                :options="$regions"
-                required
-            />
-
-            <x-hub-ui::textarea
-                name="notes"
-                label="Notes"
-                rows="3"
-            />
-
-            <x-hub-ui::checkbox
-                name="auto_backup"
-                label="Enable automatic backups"
-                :checked="true"
-            />
+            <x-hub-ui::input name="name" label="Server Name" placeholder="my-server" required />
+            <x-hub-ui::select name="region" label="Region" :options="$regions" required />
+            <x-hub-ui::textarea name="notes" label="Notes" rows="3" />
+            <x-hub-ui::checkbox name="auto_backup" label="Enable automatic backups" :checked="true" />
         </div>
 
         <x-slot:footer>
             <div class="flex justify-end gap-3">
-                <x-hub-ui::button href="{{ route('servers.index') }}" variant="secondary">
-                    Cancel
-                </x-hub-ui::button>
-                <x-hub-ui::button type="submit">
-                    Create Server
-                </x-hub-ui::button>
+                <x-hub-ui::button href="{{ route('servers.index') }}" variant="secondary">Cancel</x-hub-ui::button>
+                <x-hub-ui::button type="submit">Create Server</x-hub-ui::button>
             </div>
         </x-slot:footer>
     </form>

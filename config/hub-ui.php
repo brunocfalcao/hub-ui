@@ -8,7 +8,6 @@ return [
     |
     | The prefix used for all Hub UI components.
     | Components are accessed as <x-{prefix}::component-name>
-    | Default: 'hub-ui' -> <x-hub-ui::button>, <x-hub-ui::card>, etc.
     |
     */
     'prefix' => 'hub-ui',
@@ -17,19 +16,10 @@ return [
     |--------------------------------------------------------------------------
     | Application Settings
     |--------------------------------------------------------------------------
-    |
-    | Configure application-level settings for the UI components.
-    |
     */
     'app' => [
-        // Application name (used in layouts)
         'name' => env('APP_NAME', 'Laravel'),
-
-        // Custom logo component path (e.g., 'components.my-logo')
-        // If null, uses the default Hub UI logo
         'logo' => null,
-
-        // Dashboard route name for logo link
         'dashboard_route' => 'dashboard',
     ],
 
@@ -38,68 +28,56 @@ return [
     | Theme Settings
     |--------------------------------------------------------------------------
     |
-    | Configure the color theme for the UI components.
-    | Colors use Tailwind CSS color names.
+    | Define your brand colors and the package derives all surface, border,
+    | and text colors automatically per light/dark mode.
+    |
+    | Colors must be hex values (e.g., '#10b981').
     |
     */
     'theme' => [
-        // Primary accent color (emerald, blue, indigo, purple, etc.)
-        'primary' => 'emerald',
-    ],
+        'default_mode' => 'dark', // 'dark' or 'light'
 
-    /*
-    |--------------------------------------------------------------------------
-    | Feature Toggles
-    |--------------------------------------------------------------------------
-    |
-    | Enable or disable specific features in the dashboard layout.
-    |
-    */
-    'features' => [
-        // Toast notification system
-        'toast' => true,
-
-        // Confirmation modal system
-        'confirmation' => true,
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Sidebar Settings
-    |--------------------------------------------------------------------------
-    |
-    | Configure the sidebar component behavior.
-    |
-    */
-    'sidebar' => [
-        // Width class (Tailwind width class)
-        'width' => 'w-28',
-
-        // Enable localStorage persistence for accordion state
-        'persistence' => true,
+        'colors' => [
+            'primary'   => '#10b981',
+            'secondary' => '#6366f1',
+            'success'   => '#22c55e',
+            'warning'   => '#f59e0b',
+            'danger'    => '#ef4444',
+            'info'      => '#3b82f6',
+        ],
     ],
 
     /*
     |--------------------------------------------------------------------------
     | Layout Settings
     |--------------------------------------------------------------------------
-    |
-    | Configure the dashboard layout.
-    |
     */
     'layout' => [
-        // Font families (Google Fonts URLs will be generated)
         'fonts' => [
             'body' => 'Inter',
             'heading' => 'Space Grotesk',
             'mono' => 'JetBrains Mono',
         ],
+    ],
 
-        // Background colors (CSS hex values)
-        'colors' => [
-            'body' => '#1a1e2e',
-            'sidebar' => '#151820',
-            'card' => '#1a2332',
-        ],
+    /*
+    |--------------------------------------------------------------------------
+    | Sidebar Settings
+    |--------------------------------------------------------------------------
+    */
+    'sidebar' => [
+        'width' => 'w-28',
+        'persistence' => true,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Feature Toggles
+    |--------------------------------------------------------------------------
+    */
+    'features' => [
+        'toast' => true,
+        'confirmation' => true,
+        'navigate_fade' => true,
     ],
 ];

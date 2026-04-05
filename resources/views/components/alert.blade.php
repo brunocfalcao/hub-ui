@@ -5,13 +5,12 @@
 ])
 
 @php
-    $colors = [
-        'info' => 'text-blue-400 bg-blue-900/20 border-blue-800',
-        'success' => 'text-green-400 bg-green-900/20 border-green-800',
-        'warning' => 'text-yellow-400 bg-yellow-900/20 border-yellow-800',
-        'error' => 'text-red-400 bg-red-900/20 border-red-800',
-        'danger' => 'text-red-400 bg-red-900/20 border-red-800',
-    ];
+    $typeClass = match($type) {
+        'success' => 'ui-alert-success',
+        'warning' => 'ui-alert-warning',
+        'error', 'danger' => 'ui-alert-error',
+        default => 'ui-alert-info',
+    };
 
     $icons = [
         'info' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />',
@@ -20,13 +19,11 @@
         'error' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />',
         'danger' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />',
     ];
-
-    $colorClass = $colors[$type] ?? $colors['info'];
     $iconPath = $icons[$type] ?? $icons['info'];
 @endphp
 
 <div
-    {{ $attributes->merge(['class' => "rounded-md border p-4 {$colorClass}"]) }}
+    {{ $attributes->merge(['class' => "rounded-md border p-4 {$typeClass}"]) }}
     @if($dismissible) x-data="{ show: true }" x-show="show" x-transition @endif
 >
     <div class="flex">
@@ -47,7 +44,7 @@
         </div>
         @if($dismissible)
             <div class="ml-auto pl-3">
-                <button @click="show = false" class="inline-flex rounded-md p-1.5 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-900 focus:ring-current">
+                <button @click="show = false" class="inline-flex rounded-md p-1.5 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-current">
                     <span class="sr-only">Dismiss</span>
                     <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />

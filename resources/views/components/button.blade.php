@@ -8,30 +8,17 @@
 ])
 
 @php
-    $variants = [
-        'primary' => 'bg-emerald-600 text-white hover:bg-emerald-500 disabled:bg-emerald-600/50 disabled:cursor-not-allowed focus:ring-emerald-500',
-        'secondary' => 'bg-white/5 text-white/70 border border-white/10 hover:bg-white/10 hover:text-white focus:ring-emerald-500',
-        'danger' => 'bg-red-700 text-white hover:bg-red-600 active:bg-red-800 focus:ring-red-500',
-        'ghost' => 'text-white/70 hover:bg-white/5 hover:text-white focus:ring-emerald-500',
-        'link' => 'text-emerald-400 hover:text-emerald-300 underline-offset-4 hover:underline focus:ring-emerald-500',
-    ];
+    $sizeClass = match($size) {
+        'sm' => 'ui-btn-sm',
+        'lg' => 'ui-btn-lg',
+        default => 'ui-btn-md',
+    };
 
-    $sizes = [
-        'sm' => 'px-3 py-1.5 text-xs gap-1.5',
-        'md' => 'px-5 py-3 text-sm gap-2',
-        'lg' => 'px-6 py-3 text-base gap-2.5',
-    ];
-
-    $variantClass = $variants[$variant] ?? $variants['primary'];
-    $sizeClass = $sizes[$size] ?? $sizes['md'];
-
-    $baseClasses = "inline-flex items-center justify-center font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#151b23] transition-colors";
+    $classes = "ui-btn ui-btn-{$variant} {$sizeClass}";
 
     if ($disabled || $loading) {
-        $baseClasses .= " opacity-50 cursor-not-allowed";
+        $classes .= ' opacity-50 cursor-not-allowed';
     }
-
-    $classes = "{$baseClasses} {$variantClass} {$sizeClass}";
 @endphp
 
 @if($href && !$disabled)

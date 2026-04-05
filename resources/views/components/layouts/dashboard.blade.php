@@ -1,32 +1,15 @@
 {{-- Dashboard Layout with Sidebar --}}
-{{--
-    Usage:
-    <x-hub-ui::layouts.dashboard title="Page Title">
-        <x-slot:sidebar>
-            <x-hub-ui::sidebar :activeSection="'servers'">
-                ...navigation...
-            </x-hub-ui::sidebar>
-        </x-slot:sidebar>
-
-        <!-- Main content -->
-        <x-hub-ui::page-header title="Servers" />
-        ...
-
-        <x-slot:scripts>
-            <!-- Page-specific scripts -->
-        </x-slot:scripts>
-    </x-hub-ui::layouts.dashboard>
---}}
 @props([
     'title' => config('app.name'),
 ])
 
 @php
-    $bodyBg = config('hub-ui.layout.colors.body', '#1a1e2e');
-    $sidebarBg = config('hub-ui.layout.colors.sidebar', '#151820');
     $sidebarWidth = config('hub-ui.sidebar.width', 'w-28');
     $toastEnabled = config('hub-ui.features.toast', true);
     $confirmationEnabled = config('hub-ui.features.confirmation', true);
+    $navigateFade = config('hub-ui.features.navigate_fade', true);
+    $fonts = config('hub-ui.layout.fonts', []);
+    $bodyFont = $fonts['body'] ?? 'Inter';
 @endphp
 
 <!doctype html>
@@ -38,25 +21,33 @@
 
     <title>{{ $title }}</title>
 
+    {{-- Theme script (synchronous — prevents FOUC) --}}
+    @include('hub-ui::partials.scripts')
+
+    {{-- Theme CSS variables and utilities --}}
+    @include('hub-ui::partials.styles')
+
     {{-- Fonts --}}
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    {{-- Head slot for additional styles/meta --}}
     {{ $head ?? '' }}
 
-    {{-- Vite assets - consumer must configure --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    @if(class_exists(\Livewire\Livewire::class))
+        @livewireStyles
+    @endif
 </head>
-<body class="text-neutral-100 antialiased" style="font-family: 'Inter', sans-serif; background-color: {{ $bodyBg }}">
-    {{-- Main container: flex row --}}
+<body class="ui-text antialiased" style="font-family: '{{ $bodyFont }}', sans-serif; background-color: rgb(var(--ui-bg-body))">
     <div id="app-shell" class="flex h-screen overflow-hidden"
          x-data="{ sidebarOpen: false }">
 
         {{-- Mobile Menu Button --}}
         <button
             @click="sidebarOpen = !sidebarOpen"
-            class="fixed top-1/2 -translate-y-1/2 left-0 z-50 lg:hidden inline-flex items-center justify-center h-10 w-8 rounded-r-lg bg-white/5 border border-white/10 border-l-0 text-white/70 hover:bg-white/10 hover:text-white transition-colors"
+            class="fixed top-1/2 -translate-y-1/2 left-0 z-50 lg:hidden inline-flex items-center justify-center h-10 w-8 rounded-r-lg border border-l-0 transition-colors"
+            style="background-color: rgb(var(--ui-bg-elevated)); border-color: rgb(var(--ui-border)); color: rgb(var(--ui-text-muted))"
         >
             <svg x-show="!sidebarOpen" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -80,35 +71,37 @@
             x-cloak
         ></div>
 
-        {{-- Sidebar (left, fixed width) --}}
+        {{-- Sidebar --}}
+        @persist('sidebar')
         <aside
-            class="fixed lg:static inset-y-0 left-0 z-40 {{ $sidebarWidth }} flex-shrink-0 transform transition-transform duration-300 ease-in-out lg:translate-x-0 border-r border-white/5"
+            class="fixed lg:static inset-y-0 left-0 z-40 {{ $sidebarWidth }} h-screen lg:h-full flex-shrink-0 transform transition-transform duration-300 ease-in-out lg:translate-x-0 border-r ui-border"
             :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
-            style="background-color: {{ $sidebarBg }}"
+            style="background-color: rgb(var(--ui-bg-sidebar))"
         >
             {{ $sidebar ?? '' }}
         </aside>
+        @endpersist
 
-        {{-- Main content (right, flexible) --}}
+        {{-- Main content --}}
         <main class="flex-1 flex flex-col overflow-hidden">
-            {{-- Main scrollable content --}}
-            <div class="flex-1 overflow-y-auto px-12 py-12">
+            <div class="flex-1 overflow-y-auto px-12 py-12 {{ $navigateFade ? 'navigate-fade' : '' }}">
                 {{ $slot }}
             </div>
         </main>
     </div>
 
-    {{-- Toast Notifications --}}
     @if($toastEnabled)
         <x-hub-ui::toast />
     @endif
 
-    {{-- Confirmation Modal --}}
     @if($confirmationEnabled)
         <x-hub-ui::modal-confirmation />
     @endif
 
-    {{-- Scripts slot --}}
     {{ $scripts ?? '' }}
+
+    @if(class_exists(\Livewire\Livewire::class))
+        @livewireScriptConfig
+    @endif
 </body>
 </html>

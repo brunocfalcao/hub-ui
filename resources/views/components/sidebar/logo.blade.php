@@ -1,8 +1,8 @@
 {{-- Default Hub UI Logo --}}
 {{-- Override by setting 'app.logo' in config/hub-ui.php --}}
-<svg viewBox="0 0 40 40" {{ $attributes->merge(['class' => 'w-14 h-14 text-white']) }}>
+<svg viewBox="0 0 40 40" {{ $attributes->merge(['class' => 'w-14 h-14 ui-text']) }}>
     {{-- Center hub --}}
-    <circle cx="20" cy="20" r="6" fill="#10b981"/>
+    <circle cx="20" cy="20" r="6" style="fill: rgb(var(--ui-primary))"/>
     {{-- Corner nodes --}}
     <circle cx="8" cy="8" r="3" fill="currentColor" opacity="0.6"/>
     <circle cx="8" cy="32" r="3" fill="currentColor" opacity="0.6"/>
@@ -14,5 +14,5 @@
     <line x1="26" y1="16" x2="30" y2="10" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
     <line x1="26" y1="24" x2="30" y2="30" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
     {{-- Inner glow --}}
-    <circle cx="20" cy="20" r="3" fill="#6ee7b7"/>
+    <circle cx="20" cy="20" r="3" style="fill: rgb(var(--ui-primary-soft))"/>
 </svg>

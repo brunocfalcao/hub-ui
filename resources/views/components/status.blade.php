@@ -1,29 +1,32 @@
 {{-- Status Indicator Component --}}
-{{-- Usage: <x-hub-ui::status color="emerald" label="Connected" /> --}}
-{{-- With tooltip: <x-hub-ui::status color="red" label="Error" title="Connection failed" /> --}}
-{{-- Animated: <x-hub-ui::status color="blue" label="Processing" :animated="true" /> --}}
-{{--
-    NOTE: This component uses dynamic Tailwind classes (bg-{color}-500, text-{color}-400).
-    You must safelist these colors in your tailwind.config.js:
-
-    safelist: [
-        { pattern: /^(bg|text)-(red|green|blue|yellow|gray|emerald|amber)-(300|400|500)$/ },
-    ]
---}}
+{{-- Usage: <x-hub-ui::status type="success" label="Connected" /> --}}
+{{-- Animated: <x-hub-ui::status type="info" label="Processing" :animated="true" /> --}}
 @props([
-    'color' => 'gray',
+    'type' => 'default',
     'label',
     'animated' => false,
 ])
 
-<div {{ $attributes->merge(['class' => 'flex items-center gap-2']) }}>
+@php
+    $colorVar = match($type) {
+        'primary' => '--ui-primary',
+        'success' => '--ui-success',
+        'warning' => '--ui-warning',
+        'danger' => '--ui-danger',
+        'info' => '--ui-info',
+        'secondary' => '--ui-secondary',
+        default => '--ui-text-subtle',
+    };
+@endphp
+
+<div {{ $attributes->merge(['class' => 'flex items-center gap-2']) }} style="--status-color: rgb(var({{ $colorVar }}))">
     @if($animated)
         <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-{{ $color }}-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-{{ $color }}-500"></span>
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ui-status-dot"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 ui-status-dot"></span>
         </span>
     @else
-        <span class="w-2 h-2 rounded-full bg-{{ $color }}-500"></span>
+        <span class="w-2 h-2 rounded-full ui-status-dot"></span>
     @endif
-    <span class="text-sm text-{{ $color }}-400">{{ $label }}</span>
+    <span class="text-sm ui-status-text">{{ $label }}</span>
 </div>

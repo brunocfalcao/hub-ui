@@ -91,14 +91,14 @@
     <nav class="flex flex-col gap-2 w-full px-2 relative" x-ref="nav">
         {{-- Sliding background tile --}}
         <div
-            class="absolute inset-x-0 mx-2 rounded-xl bg-white/5 pointer-events-none z-0"
+            class="absolute inset-x-0 mx-2 rounded-xl ui-sidebar-tile pointer-events-none z-0"
             :class="tileReady ? 'transition-all duration-300 ease-in-out' : ''"
             :style="`top: ${tileTop}px; height: ${tileHeight}px; opacity: ${tileVisible ? 1 : 0}`"
         ></div>
         {{ $slot }}
     </nav>
 
-    {{-- Footer (avatar, logout, etc.) --}}
+    {{-- Footer --}}
     @if(isset($footer))
         <div class="mt-auto">
             {{ $footer }}

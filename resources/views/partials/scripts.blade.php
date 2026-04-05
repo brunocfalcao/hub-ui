@@ -1,8 +1,28 @@
-{{-- Hub UI Scripts --}}
-{{-- This partial is rendered by the @hubUiScripts directive --}}
-{{-- Note: You should import and initialize toast/confirmation in your app.js instead --}}
-{{-- This is provided as a fallback for simple setups --}}
+{{-- Hub UI Theme Script (inline, synchronous — prevents FOUC) --}}
 <script>
-    // Toast and Confirmation are typically initialized via JS modules
-    // See resources/js/hub-ui.js for module-based initialization
+    (function() {
+        var stored = localStorage.getItem('hub-ui-theme');
+        var defaultMode = '{{ config("hub-ui.theme.default_mode", "dark") }}';
+        var preference = stored || defaultMode;
+
+        function apply(mode) {
+            document.documentElement.classList.toggle('light', mode === 'light');
+        }
+
+        apply(preference);
+
+        window.hubUiSetTheme = function(mode) {
+            localStorage.setItem('hub-ui-theme', mode);
+            apply(mode);
+        };
+
+        window.hubUiToggleTheme = function() {
+            var current = document.documentElement.classList.contains('light') ? 'light' : 'dark';
+            window.hubUiSetTheme(current === 'dark' ? 'light' : 'dark');
+        };
+
+        window.hubUiGetTheme = function() {
+            return document.documentElement.classList.contains('light') ? 'light' : 'dark';
+        };
+    })();
 </script>

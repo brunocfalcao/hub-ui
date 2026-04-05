@@ -1,38 +1,59 @@
-# Layouts
+# Dashboard Layout
 
-## Dashboard Layout
+Full-page layout with responsive sidebar, mobile support, and optional toast/confirmation.
 
-The dashboard layout provides a full-page layout with a responsive sidebar.
-
-### Basic Usage
+## Usage
 
 ```blade
 <x-hub-ui::layouts.dashboard title="Page Title">
     <x-slot:sidebar>
-        {{-- Sidebar content --}}
+        <x-hub-ui::sidebar>
+            {{-- Navigation --}}
+        </x-hub-ui::sidebar>
     </x-slot:sidebar>
 
     {{-- Main content --}}
-    <h1>Welcome</h1>
+    <x-hub-ui::page-header title="Welcome" />
 </x-hub-ui::layouts.dashboard>
 ```
 
-### Props
+## Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `title` | string | `config('app.name')` | Page title |
+| `title` | string | `config('app.name')` | HTML page title |
 
-### Slots
+## Slots
 
 | Slot | Description |
 |------|-------------|
-| `default` | Main content area |
-| `sidebar` | Sidebar content (use with `<x-hub-ui::sidebar>`) |
-| `head` | Additional content for `<head>` (styles, meta tags) |
-| `scripts` | Page-specific scripts (rendered at end of body) |
+| `default` | Main content area (padded with `px-12 py-12`) |
+| `sidebar` | Sidebar content — use with `<x-hub-ui::sidebar>` |
+| `head` | Additional `<head>` content (styles, meta tags) |
+| `scripts` | Scripts rendered at end of `<body>` |
 
-### Complete Example
+## What It Includes
+
+- Full HTML document (`<!doctype html>` through `</html>`)
+- Theme styles and scripts (prevents FOUC)
+- Google Fonts: Inter, Space Grotesk, JetBrains Mono
+- Vite asset loading (`resources/css/app.css`, `resources/js/app.js`)
+- Mobile sidebar toggle (hamburger button + overlay)
+- Toast container (when `config('hub-ui.features.toast')` is `true`)
+- Confirmation modal (when `config('hub-ui.features.confirmation')` is `true`)
+- Navigate fade animation (when `config('hub-ui.features.navigate_fade')` is `true`)
+- Livewire styles/scripts (when Livewire is installed)
+- Sidebar persistence via `@persist('sidebar')`
+
+## Mobile Responsiveness
+
+Handled automatically:
+
+- Sidebar collapses off-screen on `< lg` breakpoints
+- A hamburger button appears at the left edge
+- Clicking the overlay closes the sidebar
+
+## Complete Example
 
 ```blade
 <x-hub-ui::layouts.dashboard title="Server Management">
@@ -41,15 +62,50 @@ The dashboard layout provides a full-page layout with a responsive sidebar.
     </x-slot:head>
 
     <x-slot:sidebar>
-        <x-hub-ui::sidebar :activeSection="'servers'">
+        <x-hub-ui::sidebar :activeSection="'servers'" :activeHighlight="'all-servers'">
+            <x-slot:logo>
+                <a href="{{ route('dashboard') }}">
+                    <img src="/logo.svg" class="w-10 h-10" />
+                </a>
+            </x-slot:logo>
+
+            {{-- Dashboard link --}}
+            <a href="{{ route('dashboard') }}" data-nav-item="dashboard"
+               @click="highlight = 'dashboard'; open = null;"
+               class="flex flex-col items-center gap-1 py-2 rounded-xl cursor-pointer relative z-10"
+               :class="highlight === 'dashboard' ? 'ui-sidebar-text-active' : 'ui-sidebar-text'">
+                <span class="w-7 h-7">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 ..." />
+                    </svg>
+                </span>
+                <span class="text-xs">Dashboard</span>
+            </a>
+
+            {{-- Accordion section --}}
             <x-hub-ui::sidebar.section name="servers" label="Servers">
                 <x-slot:icon>
-                    <svg>...</svg>
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 14.25h13.5..." />
+                    </svg>
                 </x-slot:icon>
-                <x-hub-ui::sidebar.link href="/servers" :active="true" child>
-                    All Servers
-                </x-hub-ui::sidebar.link>
+
+                <a href="/servers" data-nav-item="all-servers"
+                   @click="highlight = 'all-servers'"
+                   class="flex flex-col items-center gap-1 py-2 rounded-lg relative z-10"
+                   :class="highlight === 'all-servers' ? 'ui-sidebar-text-active' : 'ui-sidebar-text'">
+                    <span class="w-5 h-5">
+                        <svg>...</svg>
+                    </span>
+                    <span class="text-xs">All Servers</span>
+                </a>
             </x-hub-ui::sidebar.section>
+
+            <x-slot:footer>
+                <div class="flex flex-col items-center gap-3 pb-4">
+                    <x-hub-ui::theme-toggle />
+                </div>
+            </x-slot:footer>
         </x-hub-ui::sidebar>
     </x-slot:sidebar>
 
@@ -67,30 +123,21 @@ The dashboard layout provides a full-page layout with a responsive sidebar.
 </x-hub-ui::layouts.dashboard>
 ```
 
-### Mobile Responsiveness
-
-The layout automatically handles mobile responsiveness:
-- Sidebar collapses on mobile devices
-- A hamburger button appears to toggle the sidebar
-- Clicking outside the sidebar closes it on mobile
-
-### Configuration
-
-The layout respects these config options:
+## Configuration
 
 ```php
 // config/hub-ui.php
-'layout' => [
-    'colors' => [
-        'body' => '#1a1e2e',
-        'sidebar' => '#151820',
-    ],
-],
-'sidebar' => [
-    'width' => 'w-28',
-],
+'sidebar' => ['width' => 'w-28'],
 'features' => [
     'toast' => true,
     'confirmation' => true,
+    'navigate_fade' => true,
+],
+'layout' => [
+    'fonts' => [
+        'body' => 'Inter',       // Applied to <body>
+        'heading' => 'Space Grotesk',
+        'mono' => 'JetBrains Mono',
+    ],
 ],
 ```

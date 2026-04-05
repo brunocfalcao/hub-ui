@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-04-05
+
+### Features
+
+- [NEW FEATURE] Dynamic theme system via `Theme` class — generates CSS variables from hex config colors for both dark and light modes
+- [NEW FEATURE] Theme toggle component (`<x-hub-ui::theme-toggle>`) with localStorage persistence
+- [NEW FEATURE] Data table component (`<x-hub-ui::data-table>`) — simple table from arrays with row count
+- [NEW FEATURE] Spinner component (`<x-hub-ui::spinner>`) — animated loading indicator
+- [NEW FEATURE] Navigate fade animation (configurable via `features.navigate_fade`)
+
+### Improvements
+
+- [IMPROVED] Scrollbar styling — thicker 8px scrollbar with hover states, Firefox fallback via `@supports`
+- [IMPROVED] Sidebar — added `activeHighlight` prop for independent tile tracking
+- [IMPROVED] Configuration — restructured `theme.colors` with hex values, added `default_mode` option
+- [IMPROVED] CSS utilities — added semantic color classes for all configured colors
+- [IMPROVED] Documentation — complete rewrite to match actual component props and behavior
+
 ## [1.1.0] - 2026-02-16
 
 ### Improvements
@@ -89,4 +107,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Alpine.js 3.x (with collapse plugin)
 - Tailwind CSS 3.x
 
+[1.2.0]: https://github.com/brunocfalcao/hub-ui/compare/v1.1.0...v1.2.0
+[1.1.0]: https://github.com/brunocfalcao/hub-ui/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/brunocfalcao/hub-ui/releases/tag/v1.0.0
