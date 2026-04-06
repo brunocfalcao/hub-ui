@@ -14,6 +14,7 @@ Reusable Laravel admin panel UI components with dark/light theming, Alpine.js, a
    - [Display](components/display.md) — Card, Badge, Alert, Status, Page Header, Empty State, Spinner, Data Table, Dropdown
    - [Modals](components/modals.md) — Modal and Confirmation Dialog
    - [Toast](components/toast.md) — Toast Notifications
+5. [JavaScript API](javascript-api.md) — hubUiFetch, theme toggle, toast, confirmation
 
 ## Quick Start
 

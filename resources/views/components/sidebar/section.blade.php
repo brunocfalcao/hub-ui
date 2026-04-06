@@ -10,10 +10,10 @@
     <button
         type="button"
         @click="
+            if (open === '{{ $name }}') return;
             open = '{{ $name }}';
-            highlight = '{{ $name }}';
         "
-        data-nav-item="{{ $name }}"
+        data-section="{{ $name }}"
         class="w-full flex flex-col items-center gap-1 py-2 rounded-xl cursor-pointer transition-colors relative"
         :class="open === '{{ $name }}' ? 'ui-sidebar-text-active' : 'ui-sidebar-text hover:ui-text-muted'"
     >

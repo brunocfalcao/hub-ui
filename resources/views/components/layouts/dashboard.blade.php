@@ -1,6 +1,7 @@
 {{-- Dashboard Layout with Sidebar --}}
 @props([
     'title' => config('app.name'),
+    'flush' => false,
 ])
 
 @php
@@ -84,7 +85,7 @@
 
         {{-- Main content --}}
         <main class="flex-1 flex flex-col overflow-hidden">
-            <div class="flex-1 overflow-y-auto px-12 py-12 {{ $navigateFade ? 'navigate-fade' : '' }}">
+            <div class="flex-1 {{ $flush ? 'overflow-hidden' : 'overflow-y-auto px-12 py-12' }} {{ $navigateFade ? 'navigate-fade' : '' }}">
                 {{ $slot }}
             </div>
         </main>
