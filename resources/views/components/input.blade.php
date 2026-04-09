@@ -1,5 +1,6 @@
 @props([
     'name',
+    'id' => null,
     'label' => null,
     'type' => 'text',
     'value' => null,
@@ -15,7 +16,7 @@
 ])
 
 @php
-    $inputId = $name;
+    $inputId = $id ?? $name;
     $hasError = $error || $errors->has($name);
     $errorMessage = $error ?? $errors->first($name);
     $inputClasses = 'block w-full px-4 py-3 text-sm border rounded-lg shadow-sm focus:ring-2 focus:ring-offset-2 transition ui-input';

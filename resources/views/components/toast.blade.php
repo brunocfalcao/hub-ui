@@ -3,5 +3,5 @@
 
 <div
     id="toast-container"
-    class="fixed top-6 left-0 right-0 z-[9999] flex flex-col items-center gap-3 pointer-events-none"
+    class="fixed top-6 right-6 z-[9999] flex flex-col items-end gap-3 pointer-events-none"
 ></div>

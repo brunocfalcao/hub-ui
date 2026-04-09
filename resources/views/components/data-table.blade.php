@@ -1,40 +1,70 @@
 @props([
-    'columns' => [],
-    'rows' => [],
-    'empty' => 'No results.',
+    'size' => 'md',
+    'flush' => false,
 ])
 
-<div {{ $attributes->merge(['class' => 'overflow-x-auto rounded-lg border ui-border']) }}>
-    <table class="w-full text-sm text-left ui-table">
-        @if(count($columns))
-            <thead class="text-xs uppercase tracking-wider ui-bg-elevated">
-                <tr>
-                    @foreach($columns as $col)
-                        <th class="px-4 py-3 font-medium whitespace-nowrap">{{ $col }}</th>
-                    @endforeach
-                </tr>
+@php
+    $tableClass = 'w-full ui-table ui-data-table' . match($size) {
+        'sm' => ' ui-data-table--sm',
+        'lg' => ' ui-data-table--lg',
+        default => '',
+    };
+@endphp
+
+<div {{ $attributes->merge(['class' => 'overflow-x-auto rounded-lg border ui-border' . ($flush ? '' : ' mb-4')]) }}>
+    <table class="{{ $tableClass }}">
+        @if(isset($head))
+            <thead class="ui-bg-elevated">
+                {{ $head }}
             </thead>
         @endif
         <tbody>
-            @forelse($rows as $row)
-                <tr class="transition-colors">
-                    @foreach($columns as $col)
-                        <td class="px-4 py-2.5 whitespace-nowrap max-w-xs truncate" title="{{ $row[$col] ?? '' }}">
-                            {{ $row[$col] ?? '' }}
-                        </td>
-                    @endforeach
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="{{ count($columns) ?: 1 }}" class="px-4 py-8 text-center ui-text-subtle">
-                        {{ $empty }}
-                    </td>
-                </tr>
-            @endforelse
+            {{ $slot }}
         </tbody>
+        @if(isset($foot))
+            <tfoot class="ui-bg-elevated">
+                {{ $foot }}
+            </tfoot>
+        @endif
     </table>
 </div>
 
-@if(count($rows))
-    <p class="text-xs ui-text-subtle mt-2">{{ count($rows) }} {{ Str::plural('row', count($rows)) }}</p>
-@endif
+@once
+<style>
+    /* Base data-table sizing */
+    .ui-data-table th {
+        padding: 0.625rem 1rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        white-space: nowrap;
+    }
+    .ui-data-table td {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+        white-space: nowrap;
+    }
+    .ui-data-table tbody tr {
+        transition: background-color 150ms;
+    }
+    .ui-data-table tfoot td,
+    .ui-data-table tfoot th {
+        padding: 0.625rem 1rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    /* Small variant */
+    .ui-data-table--sm th { padding: 0.375rem 0.75rem; }
+    .ui-data-table--sm td { padding: 0.25rem 0.75rem; }
+    .ui-data-table--sm tfoot td,
+    .ui-data-table--sm tfoot th { padding: 0.375rem 0.75rem; }
+
+    /* Large variant */
+    .ui-data-table--lg th { padding: 0.75rem 1.25rem; font-size: 0.8125rem; }
+    .ui-data-table--lg td { padding: 0.625rem 1.25rem; font-size: 0.8125rem; }
+    .ui-data-table--lg tfoot td,
+    .ui-data-table--lg tfoot th { padding: 0.75rem 1.25rem; font-size: 0.8125rem; }
+</style>
+@endonce
