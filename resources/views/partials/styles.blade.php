@@ -229,6 +229,59 @@
         background-color: rgb(var(--ui-bg-elevated) / 0.5);
     }
 
+    /* ── Keycap ── */
+    .ui-kbd {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 1.25rem;
+        height: 1.25rem;
+        padding: 0 0.375rem;
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+        font-size: 0.6875rem;
+        font-weight: 500;
+        color: rgb(var(--ui-text-muted));
+        background-color: rgb(var(--ui-bg-elevated));
+        border: 1px solid rgb(var(--ui-border));
+        border-bottom-width: 2px;
+        border-radius: 0.25rem;
+        line-height: 1;
+    }
+
+    /* ── Tabular nums ── */
+    .ui-tabular { font-variant-numeric: tabular-nums; }
+
+    /* ── Subtle divider line ── */
+    .ui-divider-v {
+        width: 1px;
+        align-self: stretch;
+        background-color: rgb(var(--ui-border));
+    }
+
+    /* ── Ticker shimmer (subtle animation for 'alive' elements) ── */
+    @keyframes uiShimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+    }
+    .ui-shimmer {
+        background: linear-gradient(
+            90deg,
+            rgb(var(--ui-bg-elevated)) 0%,
+            rgb(var(--ui-border-light)) 50%,
+            rgb(var(--ui-bg-elevated)) 100%
+        );
+        background-size: 200% 100%;
+        animation: uiShimmer 1.6s ease-in-out infinite;
+    }
+
+    /* ── Pulse ring accent (for status indicators and live moments) ── */
+    @keyframes uiPulseRing {
+        0% { box-shadow: 0 0 0 0 rgb(var(--ui-success) / 0.5); }
+        70% { box-shadow: 0 0 0 6px rgb(var(--ui-success) / 0); }
+        100% { box-shadow: 0 0 0 0 rgb(var(--ui-success) / 0); }
+    }
+    .ui-pulse-ring { animation: uiPulseRing 2.2s ease-out infinite; }
+
     /* ── Scrollbar ── */
     .ui-scrollbar::-webkit-scrollbar { width: 8px; height: 8px; }
     .ui-scrollbar::-webkit-scrollbar-track { background: transparent; }

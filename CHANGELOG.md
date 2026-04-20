@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-04-20
+
+### Features
+
+- [NEW FEATURE] `<x-hub-ui::live-header>` — page header with title, description, subtitle, actions slot, and pulsing live indicator with auto-refresh cadence
+- [NEW FEATURE] `<x-hub-ui::tabs>` — Alpine-driven tab bar with active underline, icon support via feathericons
+- [NEW FEATURE] `<x-hub-ui::pager>` — pagination with first/prev/numbered/next/last and per-page selector
+- [NEW FEATURE] `<x-hub-ui::stat-metric>` — labeled number tile with semantic colors and size variants
+- [NEW FEATURE] `<x-hub-ui::secondary-sidebar>` — resizable flyout sidebar wrapper with drag handle
+- [NEW FEATURE] `<x-hub-ui::number>` — animated counter with cubic ease-out, tabular numerics, locale formatting
+- [NEW FEATURE] `<x-hub-ui::trend-delta>` — up/down/stable delta indicator with auto-colored arrows
+- [NEW FEATURE] `hubUiCounter()` Alpine factory exported from the package JS entry, powers the `<number>` component
+- [NEW FEATURE] `.ui-kbd` keycap utility, `.ui-tabular` tabular-nums helper, `.ui-pulse-ring` and `.ui-shimmer` animations
+
 ## [1.3.0] - 2026-04-11
 
 ### Features
