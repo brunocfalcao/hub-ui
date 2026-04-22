@@ -282,6 +282,22 @@
     }
     .ui-pulse-ring { animation: uiPulseRing 2.2s ease-out infinite; }
 
+    /* ── Global text-selection / caret defaults ──
+       SaaS shell behavior: chrome/UI is non-selectable (stops blinking
+       caret appearing wherever a click lands). Inputs, textareas,
+       contenteditable regions, and code blocks opt back in explicitly. */
+    body {
+        user-select: none;
+        -webkit-user-select: none;
+        caret-color: transparent;
+    }
+    input, textarea, select, [contenteditable="true"],
+    .ui-table td, .ui-table th, code, pre, .ui-selectable {
+        user-select: text;
+        -webkit-user-select: text;
+        caret-color: auto;
+    }
+
     /* ── Primary sidebar mobile drawer ──
        Defensive CSS so initial paint (before Alpine boots) and Tailwind
        utility ordering can't conflict. Desktop (lg+) always static. */

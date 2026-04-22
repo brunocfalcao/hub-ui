@@ -36,10 +36,13 @@
         padding: 0.625rem 1rem;
         font-size: 0.75rem;
         font-weight: 500;
+        text-align: left;
         text-transform: uppercase;
         letter-spacing: 0.05em;
         white-space: nowrap;
     }
+    .ui-data-table th.text-center { text-align: center; }
+    .ui-data-table th.text-right  { text-align: right; }
     .ui-data-table td {
         padding: 0.5rem 1rem;
         font-size: 0.75rem;

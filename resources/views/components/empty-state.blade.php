@@ -5,7 +5,7 @@
     'action' => null,
 ])
 
-<div {{ $attributes->merge(['class' => 'flex flex-col items-center justify-center py-16 text-center']) }}>
+<div {{ $attributes->merge(['class' => 'flex flex-col items-center justify-center py-8 sm:py-12 md:py-16 px-4 text-center']) }}>
     @isset($icon)
         <div class="w-16 h-16 rounded-full flex items-center justify-center mb-4 ui-bg-elevated">
             <div class="w-8 h-8 ui-text-subtle">

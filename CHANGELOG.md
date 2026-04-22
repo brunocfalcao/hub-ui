@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2026-04-23
+
+### Features
+
+- [NEW FEATURE] `<x-hub-ui::progress-bar>` — segmented tick progress bar. Alpine-expression value, configurable tick count / width / height / gap, stale + empty states, same color ramp as speedometer.
+- [NEW FEATURE] `<x-hub-ui::pulse-dot>` — standalone colored dot primitive with optional ping ring. Uses `absolute inset-0` so ring + solid dot stay perfectly concentric regardless of parent layout.
+
+### Improvements
+
+- [IMPROVED] `<x-hub-ui::switch>` rewrite — explicit pixel-sized pill track with absolutely-positioned thumb that slides between two `left` values. Fixes Alpine string-`:style` overwriting the inline static style (which previously collapsed the track dimensions when inactive). Object-form `:style` merges instead of replaces.
+- [IMPROVED] `<x-hub-ui::badge>` — bumped inner padding (sm `px-2.5 py-1`, md `px-3 py-1`, lg `px-4 py-1.5`) for better visual weight; added `whitespace-nowrap` so multi-word labels like "DB only" don't wrap inside tight columns.
+- [IMPROVED] `<x-hub-ui::data-table>` — header cells now default to `text-align: left` (with opt-in `text-center` / `text-right` class overrides) so values and headers align under the same gutter.
+- [IMPROVED] `<x-hub-ui::modal>` — dropped the `sm:` prefix from `w-full` / `mx-auto` so modals size correctly on mobile viewports.
+- [IMPROVED] `<x-hub-ui::toast>` container — spans left-to-right edge with `max-w-full` on mobile, docks to the right with `max-w-sm` from sm+. Long toasts no longer extend off-screen.
+- [IMPROVED] `<x-hub-ui::empty-state>` — responsive vertical padding (`py-8 sm:py-12 md:py-16`) + horizontal `px-4` so tiny screens don't burn 128px of dead space.
+
+### Fixes
+
+- [BUG FIX] Global caret/selection defaults — `body { user-select: none; caret-color: transparent }` with opt-in for inputs, textareas, code/pre, and `.ui-table td/th`. Stops the "blinking cursor appears wherever I click" behaviour reported after the sidebar / store refactor.
+
 ## [1.5.0] - 2026-04-22
 
 ### Features
