@@ -282,6 +282,44 @@
     }
     .ui-pulse-ring { animation: uiPulseRing 2.2s ease-out infinite; }
 
+    /* ── Primary sidebar mobile drawer ──
+       Defensive CSS so initial paint (before Alpine boots) and Tailwind
+       utility ordering can't conflict. Desktop (lg+) always static. */
+    .hub-ui-sidebar-aside {
+        transition: transform 300ms ease-in-out;
+    }
+    @media (max-width: 1023px) {
+        .hub-ui-sidebar-aside {
+            transform: translateX(-100%);
+        }
+        .hub-ui-sidebar-aside.is-open {
+            transform: translateX(0);
+        }
+    }
+    @media (min-width: 1024px) {
+        .hub-ui-sidebar-aside {
+            transform: none !important;
+        }
+    }
+
+    /* ── Secondary sidebar right-drawer (mobile) ── */
+    .hub-ui-secondary-aside {
+        transition: transform 300ms ease-in-out;
+    }
+    @media (max-width: 1023px) {
+        .hub-ui-secondary-aside {
+            transform: translateX(100%);
+        }
+        .hub-ui-secondary-aside.is-open {
+            transform: translateX(0);
+        }
+    }
+    @media (min-width: 1024px) {
+        .hub-ui-secondary-aside {
+            transform: none !important;
+        }
+    }
+
     /* ── Scrollbar ── */
     .ui-scrollbar::-webkit-scrollbar { width: 8px; height: 8px; }
     .ui-scrollbar::-webkit-scrollbar-track { background: transparent; }

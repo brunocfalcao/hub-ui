@@ -14,21 +14,21 @@
         : 'text-base font-semibold tracking-tight ui-text';
 @endphp
 
-<div {{ $attributes->merge(['class' => 'px-6 py-4 border-b ui-border ui-bg-body']) }}>
-    <div class="flex items-start justify-between gap-4">
+<div {{ $attributes->merge(['class' => 'pl-16 pr-4 py-3 sm:px-6 sm:py-4 border-b ui-border ui-bg-body lg:pl-6']) }}>
+    <div class="flex items-start justify-between gap-3 flex-wrap sm:flex-nowrap">
         <div class="flex-1 min-w-0">
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-3 flex-wrap">
                 <h1 class="{{ $titleClass }}">{{ $title }}</h1>
                 @if($subtitle)
                     <span class="text-xs ui-text-subtle">{{ $subtitle }}</span>
                 @endif
             </div>
             @if($description)
-                <p class="text-xs ui-text-subtle mt-0.5">{{ $description }}</p>
+                <p class="text-xs ui-text-subtle mt-0.5 hidden sm:block">{{ $description }}</p>
             @endif
         </div>
 
-        <div class="flex items-center gap-3 flex-shrink-0">
+        <div class="flex items-center gap-3 flex-shrink-0 flex-wrap justify-end">
             @isset($actions)
                 {{ $actions }}
             @endisset
@@ -43,7 +43,7 @@
                 </div>
 
                 @if($lastUpdatedModel)
-                    <span x-show="{{ $lastUpdatedModel }}" class="text-[10px] ui-text-subtle font-mono tabular-nums" x-text="{{ $lastUpdatedModel }}"></span>
+                    <span x-show="{{ $lastUpdatedModel }}" class="text-[10px] ui-text-subtle font-mono tabular-nums hidden sm:inline" x-text="{{ $lastUpdatedModel }}"></span>
                 @endif
             @endif
         </div>

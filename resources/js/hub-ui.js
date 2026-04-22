@@ -23,3 +23,4 @@
 export { initToast } from './modules/toast.js';
 export { initConfirmation } from './modules/confirmation.js';
 export { registerCounter } from './modules/counter.js';
+export { registerSidebarStore } from './modules/sidebar.js';

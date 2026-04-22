@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-04-22
+
+### Features
+
+- [NEW FEATURE] `<x-hub-ui::speedometer>` — horizontal progress speedometer with live/stale/empty tri-state rendering; Alpine expression props let it drop straight into `x-for` loops
+- [NEW FEATURE] `registerSidebarStore()` Alpine factory — global `$store.sidebar` replaces scope-bound `sidebarOpen` so wire:navigate + `@persist` swaps don't strand bindings
+
+### Improvements
+
+- [IMPROVED] Primary sidebar mobile drawer: keyboard Escape dismiss, auto-close on `livewire:navigated`, aria-expanded/aria-label, defensive CSS transitions before Alpine boots
+- [IMPROVED] Secondary sidebar gained a mobile toggle + overlay flyout for sub-lg screens
+- [IMPROVED] Dashboard layout content padding is now responsive (`px-4 py-6 pt-16 sm:px-6 sm:py-8 lg:px-12 lg:py-12`)
+- [IMPROVED] `<x-hub-ui::live-header>` wraps actions and hides descriptive subtext on mobile to keep the header compact
+- [IMPROVED] `<x-hub-ui::page-header>` uses responsive heading sizing (`text-3xl sm:text-4xl lg:text-5xl`)
+
 ## [1.4.0] - 2026-04-20
 
 ### Features
