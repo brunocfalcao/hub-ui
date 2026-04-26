@@ -88,9 +88,21 @@
 
         {{-- Main content --}}
         <main class="flex-1 flex flex-col overflow-hidden min-w-0">
+            @isset($topbar)
+                <div class="shrink-0 border-b ui-border ui-bg-sidebar">
+                    {{ $topbar }}
+                </div>
+            @endisset
+
             <div class="flex-1 {{ $flush ? 'overflow-hidden' : 'overflow-y-auto px-4 py-6 pt-16 sm:px-6 sm:py-8 lg:px-12 lg:py-12 lg:pt-12' }} {{ $navigateFade ? 'navigate-fade' : '' }}">
                 {{ $slot }}
             </div>
+
+            @isset($footerbar)
+                <div class="shrink-0 border-t ui-border ui-bg-sidebar">
+                    {{ $footerbar }}
+                </div>
+            @endisset
         </main>
     </div>
 

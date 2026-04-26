@@ -81,6 +81,24 @@
         box-shadow: 0 0 0 3px rgb(var(--ui-danger) / 0.2);
     }
 
+    /* ── Native select: strip the OS chrome and stamp a brand chevron.
+       Background-image is a chevron inlined as data: URI in the muted
+       text color so it tracks the theme without an extra DOM node. */
+    .ui-select {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 8 10 12 14 8'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 1rem 1rem;
+        cursor: pointer;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    .ui-select::-ms-expand { display: none; }
+
     .ui-label    { color: rgb(var(--ui-text-muted)); }
     .ui-hint     { color: rgb(var(--ui-text-subtle)); }
     .ui-required { color: rgb(var(--ui-primary)); }

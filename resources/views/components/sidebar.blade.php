@@ -103,10 +103,11 @@
         {{ $slot }}
     </nav>
 
-    {{-- Footer --}}
-    @if(isset($footer))
-        <div class="mt-auto">
+    {{-- Footer — always-rendered spacer so the nav stays vertically
+         centered regardless of whether the consumer passes a footer slot. --}}
+    <div class="mt-auto">
+        @isset($footer)
             {{ $footer }}
-        </div>
-    @endif
+        @endisset
+    </div>
 </div>

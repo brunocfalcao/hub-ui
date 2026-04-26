@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.2] - 2026-04-26
+
+### Features
+
+- [NEW FEATURE] `<x-hub-ui::layouts.dashboard>` exposes a `topbar` slot rendered above the scrollable content (sticky border-bottom strip, `ui-bg-sidebar` background) — used by admin.kraite.com for the global navbar (user, theme toggle, profile, logout, notifications).
+- [NEW FEATURE] `<x-hub-ui::layouts.dashboard>` exposes a `footerbar` slot rendered below the scrollable content (sticky border-top strip, `ui-bg-sidebar` background) — used for version, disclaimer, and helper links.
+
+### Improvements
+
+- [IMPROVED] `<x-hub-ui::sidebar>` always renders the `mt-auto` footer spacer so the nav vertically centers regardless of whether the consumer passes a `footer` slot. Previously the nav slid to the bottom of the column when the footer was omitted.
+- [IMPROVED] `<x-hub-ui::select>` strips browser-default chrome (`appearance: none`) and stamps an inline SVG chevron via background-image. Adds `text-overflow: ellipsis` + `cursor: pointer` so long option labels truncate cleanly and the cursor reads as interactive on hover.
+
 ## [1.6.1] - 2026-04-26
 
 ### Improvements

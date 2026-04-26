@@ -16,7 +16,7 @@
     $hasError = $error || $errors->has($name);
     $errorMessage = $error ?? $errors->first($name);
     $selectedValue = old($name, $value);
-    $inputClasses = 'block w-full px-4 py-2.5 text-sm border rounded-lg ui-input';
+    $inputClasses = 'block w-full pl-4 pr-10 py-2.5 text-sm border rounded-lg cursor-pointer ui-input ui-select';
 
     if ($hasError) {
         $inputClasses .= ' ui-input-error';
