@@ -16,7 +16,7 @@
     $inputId = $name;
     $hasError = $error || $errors->has($name);
     $errorMessage = $error ?? $errors->first($name);
-    $inputClasses = 'block w-full border rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 transition ui-input';
+    $inputClasses = 'block w-full px-4 py-2.5 text-sm border rounded-lg ui-input';
 
     if ($hasError) {
         $inputClasses .= ' ui-input-error';

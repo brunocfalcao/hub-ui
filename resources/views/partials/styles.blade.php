@@ -50,26 +50,35 @@
     .ui-bg-danger    { background-color: rgb(var(--ui-danger)); }
     .ui-bg-info      { background-color: rgb(var(--ui-info)); }
 
-    /* ── Form input base ── */
+    /* ── Form input base ──
+       Soft focus state: subtle border tint + a low-alpha glow ring instead
+       of the high-contrast Tailwind --tw-ring solid outline. Reads more
+       like Linear / Stripe than a stock Breeze form. */
     .ui-input {
         background-color: rgb(var(--ui-bg-input));
         border-color: rgb(var(--ui-border));
         color: rgb(var(--ui-text));
-        --tw-ring-offset-color: rgb(var(--ui-ring-offset));
+        box-shadow: none;
+        transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+    }
+    .ui-input:hover:not(:focus):not(:disabled) {
+        border-color: rgb(var(--ui-border-light));
     }
     .ui-input:focus {
-        border-color: rgb(var(--ui-primary));
-        --tw-ring-color: rgb(var(--ui-primary));
+        outline: none;
+        border-color: rgb(var(--ui-primary) / 0.55);
+        box-shadow: 0 0 0 3px rgb(var(--ui-primary) / 0.18);
     }
     .ui-input::placeholder {
         color: rgb(var(--ui-text-subtle));
     }
     .ui-input-error {
-        border-color: rgb(var(--ui-danger)) !important;
-        background-color: rgb(var(--ui-danger) / 0.05);
+        border-color: rgb(var(--ui-danger) / 0.6) !important;
+        background-color: rgb(var(--ui-danger) / 0.04);
     }
     .ui-input-error:focus {
-        --tw-ring-color: rgb(var(--ui-danger));
+        border-color: rgb(var(--ui-danger) / 0.7);
+        box-shadow: 0 0 0 3px rgb(var(--ui-danger) / 0.2);
     }
 
     .ui-label    { color: rgb(var(--ui-text-muted)); }
@@ -211,7 +220,10 @@
     /* ── Sidebar ── */
     .ui-sidebar-text       { color: rgb(var(--ui-text-subtle)); }
     .ui-sidebar-text-active { color: rgb(var(--ui-text)); }
-    .ui-sidebar-tile       { background-color: rgb(var(--ui-bg-elevated)); }
+    .ui-sidebar-tile       {
+        background-color: rgb(var(--ui-primary) / 0.12);
+        border: 1px solid rgb(var(--ui-primary) / 0.22);
+    }
 
     /* ── Data table ── */
     .ui-table {

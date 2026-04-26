@@ -54,18 +54,21 @@ class Theme
         [$h] = self::hexToHsl($primaryHex);
 
         if ($mode === 'dark') {
+            // Notion / Linear dark — slate-grey surfaces, not black-charcoal.
+            // Lightness ladder is wide enough that body / card / input /
+            // elevated each read as a distinct tier under typical screens.
             return [
-                '--ui-bg-body'     => self::hslToRgb($h, 3, 5),
-                '--ui-bg-sidebar'  => self::hslToRgb($h, 4, 4),
-                '--ui-bg-card'     => self::hslToRgb($h, 3, 9),
-                '--ui-bg-input'    => self::hslToRgb($h, 2, 12),
-                '--ui-bg-elevated' => self::hslToRgb($h, 2, 14),
-                '--ui-border'      => self::hslToRgb($h, 2, 20),
-                '--ui-border-light' => self::hslToRgb($h, 2, 26),
-                '--ui-text'        => '245 245 245',
-                '--ui-text-muted'  => '163 163 163',
-                '--ui-text-subtle' => '115 115 115',
-                '--ui-ring-offset' => self::hslToRgb($h, 3, 5),
+                '--ui-bg-body'     => self::hslToRgb($h, 4, 13),
+                '--ui-bg-sidebar'  => self::hslToRgb($h, 5, 11),
+                '--ui-bg-card'     => self::hslToRgb($h, 4, 17),
+                '--ui-bg-input'    => self::hslToRgb($h, 3, 20),
+                '--ui-bg-elevated' => self::hslToRgb($h, 3, 23),
+                '--ui-border'      => self::hslToRgb($h, 3, 28),
+                '--ui-border-light' => self::hslToRgb($h, 3, 34),
+                '--ui-text'        => '237 240 243',
+                '--ui-text-muted'  => '170 175 185',
+                '--ui-text-subtle' => '128 134 144',
+                '--ui-ring-offset' => self::hslToRgb($h, 4, 13),
             ];
         }
 

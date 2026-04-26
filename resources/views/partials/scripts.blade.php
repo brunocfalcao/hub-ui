@@ -1,7 +1,7 @@
 {{-- Hub UI Theme Script (inline, synchronous — prevents FOUC) --}}
 <script>
     (function() {
-        var stored = localStorage.getItem('hub-ui-theme');
+        var stored = localStorage.getItem('hub-ui-theme-v2');
         var defaultMode = '{{ config("hub-ui.theme.default_mode", "dark") }}';
         var preference = stored || defaultMode;
 
@@ -12,7 +12,7 @@
         apply(preference);
 
         window.hubUiSetTheme = function(mode) {
-            localStorage.setItem('hub-ui-theme', mode);
+            localStorage.setItem('hub-ui-theme-v2', mode);
             apply(mode);
         };
 

@@ -27,7 +27,6 @@ export function initConfirmation() {
     const iconEl = document.getElementById('confirmation-icon');
 
     if (!modal) {
-        console.warn('Confirmation modal not found in DOM');
         return;
     }
 

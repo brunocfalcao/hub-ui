@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.1] - 2026-04-26
+
+### Improvements
+
+- [IMPROVED] Dark palette retuned to a Notion / Linear slate-grey ladder. `bg-body` lifted from 5% → 13% lightness, `bg-card` 9% → 17%, `bg-input` 12% → 20%, `bg-elevated` 14% → 23%, `border` 20% → 28%. Each surface now reads as a distinct tier instead of collapsing into near-black.
+- [IMPROVED] `<x-hub-ui::input>` / `<textarea>` / `<select>` focus state replaced with a soft 3px primary glow + faint border tint (was the high-contrast Tailwind `--tw-ring-2` outline). Removed `focus:ring-2 focus:ring-offset-2 shadow-sm` from the component class lists; focus is now CSS-driven via `.ui-input:focus` so the visual ramp stays consistent.
+- [IMPROVED] `.ui-sidebar-tile` recoloured to the brand primary at 12% alpha + 22% border tint — the sliding highlight is no longer a neutral elevated grey.
+- [IMPROVED] `<x-hub-ui::sidebar>` initial-paint reliability — the initial-highlight tile now polls position for ~400ms (`trackTile()`) instead of one-shot `updateTile()` in `nextTick()`. Fixes the "no tile rendered" race when the active highlight lives inside an `x-collapse`d section that's still animating open on first paint.
+- [IMPROVED] `<x-hub-ui::layouts.dashboard>` stamps the theme class on `<html>` server-side (`config('hub-ui.theme.default_mode')`) so first paint matches the resolved theme — no flash of dark before the inline script runs.
+
+### Fixes
+
+- [BUG FIX] `confirmation.js` no longer logs "Confirmation modal not found in DOM" when consumers (e.g. login) intentionally omit the confirmation modal. Silent no-op instead of console warning.
+
+### Breaking
+
+- [SECURITY] LocalStorage theme key bumped from `hub-ui-theme` → `hub-ui-theme-v2` to invalidate stale dark/light selections from the prior palette. Fresh visitors honour `config('hub-ui.theme.default_mode')`.
+
 ## [1.6.0] - 2026-04-23
 
 ### Features

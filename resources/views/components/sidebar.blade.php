@@ -57,7 +57,12 @@
              @endif
 
              this.$nextTick(() => {
-                 this.updateTile();
+                 // trackTile polls for ~400ms — covers x-collapse's 300ms
+                 // section expand animation. A single updateTile() here
+                 // races the collapse, lands the tile at 0,0 (invisible)
+                 // when the active highlight lives inside a closed section
+                 // that's just opening on first paint.
+                 this.trackTile();
                  requestAnimationFrame(() => {
                      this.tileReady = true;
                  });

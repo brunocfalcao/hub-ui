@@ -16,7 +16,7 @@
     $hasError = $error || $errors->has($name);
     $errorMessage = $error ?? $errors->first($name);
     $selectedValue = old($name, $value);
-    $inputClasses = 'block w-full border rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 transition ui-input';
+    $inputClasses = 'block w-full px-4 py-2.5 text-sm border rounded-lg ui-input';
 
     if ($hasError) {
         $inputClasses .= ' ui-input-error';
@@ -43,14 +43,18 @@
         @if($disabled) disabled @endif
         {{ $attributes->except('class')->merge(['class' => $inputClasses]) }}
     >
-        @if($placeholder)
-            <option value="" class="ui-bg-input">{{ $placeholder }}</option>
+        @if($slot->isNotEmpty())
+            {{ $slot }}
+        @else
+            @if($placeholder)
+                <option value="" class="ui-bg-input">{{ $placeholder }}</option>
+            @endif
+            @foreach($options as $optionValue => $optionLabel)
+                <option value="{{ $optionValue }}" @selected($selectedValue == $optionValue) class="ui-bg-input">
+                    {{ $optionLabel }}
+                </option>
+            @endforeach
         @endif
-        @foreach($options as $optionValue => $optionLabel)
-            <option value="{{ $optionValue }}" @selected($selectedValue == $optionValue) class="ui-bg-input">
-                {{ $optionLabel }}
-            </option>
-        @endforeach
     </select>
 
     @if($hint && !$hasError && !$notice)

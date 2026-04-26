@@ -35,7 +35,7 @@ return [
     |
     */
     'theme' => [
-        'default_mode' => 'dark', // 'dark' or 'light'
+        'default_mode' => 'light', // 'dark' or 'light'
 
         'colors' => [
             'primary'   => '#10b981',
