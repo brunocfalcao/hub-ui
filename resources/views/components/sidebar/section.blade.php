@@ -6,14 +6,19 @@
 ])
 
 <div class="relative z-10">
-    {{-- Parent button (toggles accordion) --}}
+    {{-- Parent button (toggles accordion). Carries data-nav-item so the
+         sliding highlight tile can land on the parent when no child is
+         active yet — gives the tile a continuous slide animation when
+         the operator hops between sections. --}}
     <button
         type="button"
         @click="
             if (open === '{{ $name }}') return;
             open = '{{ $name }}';
+            highlight = '{{ $name }}';
         "
         data-section="{{ $name }}"
+        data-nav-item="{{ $name }}"
         class="w-full flex flex-col items-center gap-1 py-2 rounded-xl cursor-pointer transition-colors relative"
         :class="open === '{{ $name }}' ? 'ui-sidebar-text-active' : 'ui-sidebar-text hover:ui-text-muted'"
     >

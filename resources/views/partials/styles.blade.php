@@ -93,6 +93,7 @@
         background-position: right 0.75rem center;
         background-size: 1rem 1rem;
         cursor: pointer;
+        caret-color: transparent;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
@@ -185,6 +186,7 @@
         background-color: rgb(var(--ui-bg-card));
         border: 1px solid rgb(var(--ui-border));
         border-radius: 1rem;
+        box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
     }
     .ui-card-header {
         border-bottom: 1px solid rgb(var(--ui-border));
